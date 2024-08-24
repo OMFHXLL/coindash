@@ -5,6 +5,8 @@ import MainScreen from './components/Screens/MainScreen';
 import { DB } from './db';
 
 const tg = window.Telegram.WebApp;
+tg.disableVerticalSwipes();
+tg.expand();
 
 // const userId = 123;
 const userId = tg.initDataUnsafe.user.id;
