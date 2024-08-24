@@ -11,15 +11,15 @@ body {
 }
 
 .app {
-  height: 100dvh;
-  max-height: 100dvh;
+  height: var(--tg-viewport-height);
+  max-height: var(--tg-viewport-height);
   color: #fff;
   background-color: #333;
 }
 
 .score {
   position: fixed;
-  top: 10vh;
+  top: 10%;
   left: 50%;
   transform: translateX(-50%);
   font-size: 34px;

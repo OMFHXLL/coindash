@@ -68,7 +68,7 @@ class App extends Component {
       const { data: newUser, error: insertError } = await DB
         .from('users')
         .insert(
-          { tg_id: userId, lang: tgLanguage, username: tgUserName, photo_url: tgPhotoUrl }
+          { tg_id: userId, lang: tgLanguage, username: tgUserName }
         )
         .single();
 
