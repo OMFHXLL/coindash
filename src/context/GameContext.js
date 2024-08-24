@@ -96,6 +96,7 @@ const GameProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    initTgApp();
     async function loadUserData() {
       const userData = await fetchUserData();
       if (userData) {
