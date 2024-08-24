@@ -1,22 +1,16 @@
 import React, { Component, useState } from 'react';
 import './App.css';
-import Coin from './components/Coin';
+import { GameProvider } from './context/GameContext';
 import MainScreen from './components/Screens/MainScreen';
+import RefScreen from './components/Screens/RefScreen';
+import TaskScreen from './components/Screens/TaskScreen';
+import BoostScreen from './components/Screens/BoostScreen';
+import StatsScreen from './components/Screens/StatsScreen';
+import Navigation from './components/Navigation';
 import { DB } from './db';
 
-const tg = window.Telegram.WebApp;
-tg.disableVerticalSwipes();
-tg.expand();
 
-// const userId = 123;
-const userId = tg.initDataUnsafe.user.id;
-const tgUserName = tg.initDataUnsafe.user.username;
-const tgFirstName = tg.initDataUnsafe.user.fisrtName;
-const tgLastName = tg.initDataUnsafe.user.lastName;
-const tgIsBot = tg.initDataUnsafe.user.is_bot;
-const tgIsPremium = tg.initDataUnsafe.user.is_premium;
-const tgPhotoUrl = tg.initDataUnsafe.user.photo_url;
-const tgLanguage = tg.initDataUnsafe.user.language_code;
+
 
 const upgrades = [
   { levelRequired: 1, cost: 10, multiplier: 2, timer: 300 },
@@ -29,84 +23,26 @@ const upgrades = [
 
 
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      score: 0,
-      multiplier: 1,
-      upgrades: upgrades,
-      level: 1,
-      currentTime: 0
-    };
-  }
 
-  componentDidMount() {
-    this.fetchUserData();
-  }
+const App = () => {
+  const [activeWindow, setActiveWindow] = useState('MAIN');
 
-  async fetchUserData() {
-    const { data, error } = await DB
-      .from('users')
-      .select('*')
-      .eq('tg_id', userId); // Убираем .single(), чтобы получить массив данных
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-
-    // Проверяем, есть ли данные
-    if (data && data.length > 0) {
-      // Есть записи, берем первую
-      const userData = data[0];
-      console.log(userData);
-      this.setState({ 
-        score: userData.score,
-        // income: userData.income 
-      });
-    } else {
-      // Запись не найдена, создаем новую запись
-      const { data: newUser, error: insertError } = await DB
-        .from('users')
-        .insert(
-          { tg_id: userId, lang: tgLanguage, username: tgUserName }
-        )
-        .single();
-
-      if (insertError) {
-        console.error(insertError);
-      } else {
-        console.log('Новый пользователь создан:', newUser);
-        this.setState({ 
-          score: newUser.score,
-          // income: newUser.income 
-        });
-      }
-    }
-  }
-
-  handleCoinClick = async () => {
-    const newScore = this.state.score + 1;
-    this.setState(state => ({
-      score: state.score + state.multiplier
-    }));
-
-    await DB
-      .from('users')
-      .update({ score: newScore })
-      .eq('tg_id', userId);
+  const handleNavigationClick = (window) => {
+    setActiveWindow(window);
   };
 
-
-
-  render() {
-    return (
+  return (
+    <GameProvider>
       <div className='app'>
-        <Coin score={this.state.score} coinClickHandler={this.handleCoinClick} />
+        <MainScreen isActive={activeWindow === 'MAIN'}/>
+        <RefScreen isActive={activeWindow === 'REF'}/>
+        <TaskScreen isActive={activeWindow === 'TASK'}/>
+        <BoostScreen isActive={activeWindow === 'BOOST'}/>
+        <StatsScreen isActive={activeWindow === 'STATS'}/>
+        <Navigation onNavClick={handleNavigationClick}/>
       </div>
-    );
-  }
+    </GameProvider>
+  );
 }
 
 export default App;
