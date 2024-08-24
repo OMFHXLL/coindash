@@ -48,6 +48,11 @@ class App extends Component {
       .eq('tg_id', userId)
       .single();
 
+    if (error) {
+      console.error(error);
+      return;
+    }
+
     if (data) {
       console.log(data);
       this.setState({ 
@@ -59,7 +64,7 @@ class App extends Component {
       const { data: newUser, error: insertError } = await DB
         .from('users')
         .insert([
-          { tg_id: tgId, lang: tgLanguage, username: tgUserName }
+          { tg_id: userId, lang: tgLanguage, username: tgUserName }
         ])
         .single();
 
