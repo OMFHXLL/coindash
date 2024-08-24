@@ -48,11 +48,6 @@ class App extends Component {
       .eq('tg_id', userId)
       .single();
 
-    if (error) {
-      console.error(error);
-      return;
-    }
-
     if (data) {
       console.log(data);
       this.setState({ 
