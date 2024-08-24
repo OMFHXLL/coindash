@@ -5,6 +5,8 @@ import MainScreen from './components/Screens/MainScreen';
 import { DB } from './db';
 
 const tg = window.Telegram.WebApp;
+
+// const userId = 123;
 const userId = tg.initDataUnsafe.user.id;
 const tgUserName = tg.initDataUnsafe.user.username;
 const tgFirstName = tg.initDataUnsafe.user.fisrtName;
@@ -45,35 +47,37 @@ class App extends Component {
     const { data, error } = await DB
       .from('users')
       .select('*')
-      .eq('tg_id', userId)
-      .single();
+      .eq('tg_id', userId); // Убираем .single(), чтобы получить массив данных
 
     if (error) {
       console.error(error);
       return;
     }
 
-    if (data) {
-      console.log(data);
+    // Проверяем, есть ли данные
+    if (data && data.length > 0) {
+      // Есть записи, берем первую
+      const userData = data[0];
+      console.log(userData);
       this.setState({ 
-        score: data.score,
-        // income: data.income 
+        score: userData.score,
+        // income: userData.income 
       });
     } else {
       // Запись не найдена, создаем новую запись
       const { data: newUser, error: insertError } = await DB
         .from('users')
-        .insert([
-          { tg_id: userId, lang: tgLanguage, username: tgUserName }
-        ])
+        .insert(
+          { tg_id: userId, lang: tgLanguage, username: tgUserName, photo_url: tgPhotoUrl }
+        )
         .single();
 
       if (insertError) {
         console.error(insertError);
       } else {
-        console.log('New user created:', newUser);
+        console.log('Новый пользователь создан:', newUser);
         this.setState({ 
-          score: newUser.score + 10,
+          score: newUser.score,
           // income: newUser.income 
         });
       }
