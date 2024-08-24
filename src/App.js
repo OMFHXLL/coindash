@@ -73,7 +73,7 @@ class App extends Component {
       } else {
         console.log('New user created:', newUser);
         this.setState({ 
-          score: newUser.score,
+          score: newUser.score + 10,
           // income: newUser.income 
         });
       }
