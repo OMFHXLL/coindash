@@ -51,28 +51,27 @@ const Boost = ({ id, title, price, duration, power, requiredLevel, lastTimeActiv
     }
     
     let boosts = data[0].boosts;
+    if (!boosts) {
+      boosts = [];
+    }
+    
     let boostIndex = boosts.findIndex(boost => boost.id === id);
     if (boostIndex !== -1) {
       boosts[boostIndex].date = new Date().toISOString();
     } else {
       boosts.push({ id: id, date: new Date().toISOString() });
     }
-
-    console.log(boosts)
     
-    var updatedBoosts;
-    if (boosts) {
-      updatedBoosts = boosts.map(boost => {
-        if (boost.id === id) {
-          boost.date = new Date().toISOString();
-        }
-        return boost;
-      });
-    }
+    const updatedBoosts = boosts.map(boost => {
+      if (boost.id === id) {
+        boost.date = new Date().toISOString();
+      }
+      return boost;
+    });
     
     const { updateError } = await DB
       .from('users')
-      .update({ boosts: boosts ? updatedBoosts : [], score: state.score - price })
+      .update({ boosts: updatedBoosts, score: state.score - price })
       .eq('tg_id', tgId);
   
     if (updateError) {
