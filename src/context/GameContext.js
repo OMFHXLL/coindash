@@ -54,7 +54,7 @@ async function fetchUserData() {
   } 
   return(
     {
-      tgId: newUser.tg_id,
+      tgId: userId,
       clicks: 0,
       score: 0,
       totalScore: 0,
