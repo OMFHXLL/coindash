@@ -1,14 +1,22 @@
 import { useState, useEffect } from 'react';
 
-const useTimer = (initialTime) => {
-  const [timeRemaining, setTimeRemaining] = useState(initialTime);
+const useTimer = (duration) => {
+  const [timeRemaining, setTimeRemaining] = useState(duration);
 
   useEffect(() => {
-    if (timeRemaining > 0) {
-      const intervalId = setInterval(() => {
-        setTimeRemaining((prevTime) => prevTime - 1);
+    if (duration > 0) {
+      setTimeRemaining(duration);
+      const interval = setInterval(() => {
+        setTimeRemaining((prev) => prev - 1);
       }, 1000);
-      return () => clearInterval(intervalId);
+
+      return () => clearInterval(interval);
+    }
+  }, [duration]);
+
+  useEffect(() => {
+    if (timeRemaining <= 0) {
+      setTimeRemaining(-1);
     }
   }, [timeRemaining]);
 

@@ -22,21 +22,42 @@ body {
 }
 
 .window {
-  padding: 1rem 1rem;
+  padding: 3rem 1rem 1rem;
   position: fixed;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 5rem);
   top: 0;
   left: 0;
   opacity: 0;
   pointer-events: none;
+  overflow: hidden;
 }
 .window.active {
   opacity: 1;
   pointer-events: auto;
 }
 
+.window__header {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  height: 3rem;
+  padding: 0 1rem
+}
 
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
 
 
 
@@ -53,6 +74,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   font-size: 34px;
+  white-space: nowrap;
 }
 
 .coin {
@@ -64,6 +86,13 @@ body {
   aspect-ratio: 1/1;
   border-radius: 100%;
   background: #acacac;
+}
+.coin-multiplier {
+  position: absolute;
+  transition: transform 1s, opacity 1s;
+  color: #fff;
+  font-weight: 600;
+  pointer-events: none;
 }
 
 .energy {
@@ -85,7 +114,7 @@ body {
   height: 1.4rem;
   background: #fff;
   border-radius: 1.2rem;
-  padding: .1rem;
+  overflow: hidden;
 }
 .energy-bar-fill {
   height: 100%;
@@ -95,22 +124,52 @@ body {
 
 .nav {
   position: fixed;
-  bottom: 2rem;
-  width: calc(100% - 2rem);
-  max-width: calc(100% - 2rem);
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;  
+  bottom: 1.2rem;
+  width: 100%;
+  height: 3.5rem;
   display: flex;
+  padding: 0 1rem;
   gap: calc(1 * var(--index));
 }
 
 .nav-button {
   flex-grow: 1;
   font-size: calc(1 * var(--index));
-  padding: 1.5rem .8rem;
   border: none;
+  height: 100%;
   background: #acacac;
   color: #333;
   cursor: pointer;
   transition: background.2s ease-in-out;
+}
+
+
+.screen__content {
+  max-height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.screen__content::-webkit-scrollbar {
+  width: 0;
+}
+
+
+
+.boost-table {
+  width: 100%;
+  border-spacing: 0 .4rem;
+}
+.boost {
+  margin: .4rem 0;
+}
+.boost__title {
+  text-align: start;
+}
+.boost__button {
+  width: 1px;
+}
+.boost__button button {
+  padding: .4rem .6rem;
+  width: 100%;
 }

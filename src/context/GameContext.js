@@ -9,8 +9,10 @@ const initialState = {
   clicks: 0,
   score: 0,
   level: 1,
-  upgrades: [],
+  multiplier: 1,
   energy: 500,
+  lastTimeOnline: null,
+  boosts: []
 };
 
 async function fetchUserData() {
@@ -29,8 +31,10 @@ async function fetchUserData() {
       tgId: data[0].tg_id,
       clicks: data[0].clicks,
       score: data[0].score,
-      upgrades: data[0].upgrades,
       energy: data[0].energy,
+      level: data[0].level,
+      boosts: data[0].boosts,
+      lastTimeOnline: data[0].last_time_online
     };
   }
   const { data: newUser, error: insertError } = await DB
@@ -46,11 +50,13 @@ async function fetchUserData() {
   } else {
     console.log('Новый пользователь создан:', newUser);
     return {
-      tgId: data.tg_id,
+      tgId: newUser.tg_id,
       clicks: 0,
       score: 0,
-      upgrades: [],
       energy: 500,
+      level: 1,
+      boosts: [],
+      lastTimeOnline: new Date().toISOString()
     };
   }
 }
@@ -61,8 +67,10 @@ const actions = {
   SET_CLICKS: 'SET_CLICKS',
   SET_SCORE: 'SET_SCORE',
   SET_LEVEL: 'SET_LEVEL',
-  SET_UPGRADES: 'SET_UPGRADES',
+  SET_MULTIPLIER: 'SET_MULTIPLIER',
   SET_ENERGY: 'SET_ENERGY',
+  SET_BOOSTS: 'SET_BOOSTS',
+  SET_LAST_TIME_ONLINE: 'SET_LAST_TIME_ONLINE',
   SET_INITIAL_STATE: 'SET_INITIAL_STATE',
 };
 
@@ -77,10 +85,14 @@ const reducer = (state, action) => {
       return { ...state, score: action.payload };
     case actions.SET_LEVEL:
       return { ...state, level: action.payload };
-    case actions.SET_UPGRADES:
-      return { ...state, upgrades: action.payload };
+    case actions.SET_MULTIPLIER:
+      return { ...state, multiplier: action.payload };
     case actions.SET_ENERGY:
       return { ...state, energy: action.payload };
+    case actions.SET_BOOSTS:
+      return { ...state, boosts: action.payload };
+    case actions.SET_LAST_TIME_ONLINE:
+      return { ...state, lastTimeOnline: action.payload };
     case actions.SET_INITIAL_STATE:
       return { ...state, ...action.payload };
     default:
@@ -103,6 +115,7 @@ const GameProvider = ({ children }) => {
         dispatch({ type: actions.SET_INITIAL_STATE, payload: userData });
       }
       setLoading(false);
+      console.log(userData);
     }
 
     loadUserData();

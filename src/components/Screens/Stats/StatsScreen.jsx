@@ -1,11 +1,10 @@
 import React, { } from 'react';
-import { DB } from '../../db';
-
+import StatsHeader from './StatsHeader';
 
 const StatsScreen = ({isActive}) => {
   return(
     <div className={isActive ? 'stats window active' : 'stats window'}>
-      <h2>Статистика</h2>
+      <StatsHeader/>
     </div>
   )
 }

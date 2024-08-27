@@ -1,11 +1,12 @@
 import React, { } from 'react';
-import { DB } from '../../db';
+import { DB } from '../../../db';
+import TaskHeader from './TaskHeader';
 
 
 const TaskScreen = ({isActive}) => {
   return(
     <div className={isActive ? 'task window active' : 'task window'}>
-      <h2>Задания</h2>
+      <TaskHeader/>
     </div>
   )
 }

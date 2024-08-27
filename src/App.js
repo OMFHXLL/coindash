@@ -1,30 +1,18 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import './App.css';
 import { GameProvider } from './context/GameContext';
-import MainScreen from './components/Screens/MainScreen';
-import RefScreen from './components/Screens/RefScreen';
-import TaskScreen from './components/Screens/TaskScreen';
-import BoostScreen from './components/Screens/BoostScreen';
-import StatsScreen from './components/Screens/StatsScreen';
-import Navigation from './components/Navigation';
+import MainScreen from './components/Screens/Main/MainScreen';
+import RefScreen from './components/Screens/Ref/RefScreen';
+import TaskScreen from './components/Screens/Task/TaskScreen';
+import BoostScreen from './components/Screens/Boost/BoostScreen';
+import StatsScreen from './components/Screens/Stats/StatsScreen';
+import Navigation from './components/Navigation/Navigation';
 import { DB } from './db';
 
 
 
 
-const upgrades = [
-  { levelRequired: 1, cost: 10, multiplier: 2, timer: 300 },
-  { levelRequired: 2, cost: 20, multiplier: 3, timer: 300 },
-  { levelRequired: 3, cost: 30, multiplier: 4, timer: 300 },
-  { levelRequired: 4, cost: 40, multiplier: 5, timer: 300 },
-  { levelRequired: 5, cost: 50, multiplier: 6, timer: 300 },
-  // Добавьте остальные улучшения до 15
-];
-
-
-
-
-const App = () => {
+function App() {
   const [activeWindow, setActiveWindow] = useState('MAIN');
 
   const handleNavigationClick = (window) => {

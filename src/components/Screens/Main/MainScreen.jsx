@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { DB } from '../../db';
+import { DB } from '../../../db';
 
-import Coin from '../Coin';
-import EnergyBar from '../EnergyBar';
+import Coin from './Coin';
+import EnergyBar from './EnergyBar';
 
 const MainScreen = ({isActive}) => {
   return(
