@@ -57,8 +57,10 @@ const Boost = ({ id, title, price, duration, power, requiredLevel, lastTimeActiv
     } else {
       boosts.push({ id: id, date: new Date().toISOString() });
     }
+
+    console.log(boosts)
     
-    var updatedBoosts = []
+    var updatedBoosts;
     if (boosts) {
       updatedBoosts = boosts.map(boost => {
         if (boost.id === id) {
@@ -70,7 +72,7 @@ const Boost = ({ id, title, price, duration, power, requiredLevel, lastTimeActiv
     
     const { updateError } = await DB
       .from('users')
-      .update({ boosts: updatedBoosts, score: state.score - price })
+      .update({ boosts: boosts ? updatedBoosts : [], score: state.score - price })
       .eq('tg_id', tgId);
   
     if (updateError) {
