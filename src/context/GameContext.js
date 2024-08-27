@@ -47,18 +47,8 @@ async function fetchUserData() {
   if (insertError) {
     console.error(insertError);
     return null;
-  } else {
-    console.log('Новый пользователь создан:', newUser);
-    return {
-      tgId: newUser.tg_id,
-      clicks: 0,
-      score: 0,
-      energy: 500,
-      level: 1,
-      boosts: [],
-      lastTimeOnline: new Date().toISOString()
-    };
-  }
+  } 
+
 }
 
 // Определение типов действий

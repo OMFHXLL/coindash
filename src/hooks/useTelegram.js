@@ -1,6 +1,6 @@
 const tg = window.Telegram.WebApp;
 
-const isTg = false;
+const isTg = true;
 
 let tgUser = {}
 
