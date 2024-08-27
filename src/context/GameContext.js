@@ -103,9 +103,9 @@ const GameProvider = ({ children }) => {
       const userData = await fetchUserData();
       if (userData) {
         dispatch({ type: actions.SET_INITIAL_STATE, payload: userData });
+        console.log(userData);
       }
       setLoading(false);
-      console.log(userData);
     }
 
     loadUserData();
@@ -113,8 +113,6 @@ const GameProvider = ({ children }) => {
 
   if (loading) {
     return <div>Загрузка...</div>;
-  } else {
-    return <div>{userData}</div>
   }
 
   return (
