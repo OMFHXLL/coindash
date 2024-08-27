@@ -24,12 +24,14 @@ const BoostsArray = [
 const BoostList = () => {
   const { state, dispatch } = useContext(GameContext);
   const boosts = state.boosts;
-  boosts.forEach(item => {
-    const boost = BoostsArray.find(boost => boost.level === item.id);
-    if (boost) {
-      boost.date = item.date;
-    }
-  });
+  if (boosts) {
+    boosts.forEach(item => {
+      const boost = BoostsArray.find(boost => boost.level === item.id);
+      if (boost) {
+        boost.date = item.date;
+      }
+    });
+  }
   
   return(<div className='screen__content'>
     <table className="boost-table">
