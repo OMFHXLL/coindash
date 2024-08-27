@@ -113,6 +113,8 @@ const GameProvider = ({ children }) => {
 
   if (loading) {
     return <div>Загрузка...</div>;
+  } else {
+    return <div>{userData}</div>
   }
 
   return (
