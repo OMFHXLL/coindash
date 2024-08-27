@@ -58,12 +58,15 @@ const Boost = ({ id, title, price, duration, power, requiredLevel, lastTimeActiv
       boosts.push({ id: id, date: new Date().toISOString() });
     }
     
-    const updatedBoosts = boosts.map(boost => {
-      if (boost.id === id) {
-        boost.date = new Date().toISOString();
-      }
-      return boost;
-    });
+    var updatedBoosts = []
+    if (boosts) {
+      updatedBoosts = boosts.map(boost => {
+        if (boost.id === id) {
+          boost.date = new Date().toISOString();
+        }
+        return boost;
+      });
+    }
     
     const { updateError } = await DB
       .from('users')
