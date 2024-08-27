@@ -59,7 +59,35 @@ body {
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
+.mask {
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  mask-type: alpha;
+  -webkit-mask-type: alpha;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-position: center;
+}
 
+
+
+.energy-icon {
+  width: 1rem;
+  aspect-ratio: 1/1;
+  background: #fff;
+  margin-right: .2rem;
+  mask-image: url(./assets/flash-thunder-svgrepo-com.svg);
+  -webkit-mask-image: url(./assets/flash-thunder-svgrepo-com.svg);
+}
+.coin-icon {
+  width: 2.4rem;
+  aspect-ratio: 1/1;
+  margin-right: .2rem;
+  background: #fff;
+  mask-image: url(./assets/copper-coin-svgrepo-com.svg);
+  -webkit-mask-image: url(./assets/copper-coin-svgrepo-com.svg);
+}
 
 
 
@@ -75,6 +103,9 @@ body {
   transform: translateX(-50%);
   font-size: 34px;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .coin {
@@ -108,12 +139,17 @@ body {
   text-align: center;
   width: 100%;
   margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .energy-bar {
   width: 100%;
   height: 1.4rem;
   background: #fff;
   border-radius: 1.2rem;
+  border: 3px solid #fff;
   overflow: hidden;
 }
 .energy-bar-fill {
@@ -142,6 +178,7 @@ body {
   color: #333;
   cursor: pointer;
   transition: background.2s ease-in-out;
+  border-radius: 8px;
 }
 
 
@@ -159,7 +196,7 @@ body {
 
 .boost-table {
   width: 100%;
-  border-spacing: 0 .4rem;
+  border-spacing: 0 .5rem;
 }
 .boost {
   margin: .4rem 0;
@@ -171,6 +208,16 @@ body {
   width: 1px;
 }
 .boost__button button {
-  padding: .4rem .6rem;
+  padding: .5rem .8rem;
   width: 100%;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+}
+
+.stats p {
+  margin: .4rem 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }

@@ -27,7 +27,7 @@ const Boost = ({ id, title, price, duration, power, requiredLevel, lastTimeActiv
         setTimeLeft(prevTimeLeft => {
           if (prevTimeLeft <= 1) {
             clearInterval(timerId);
-            dispatch({ type: actions.SET_MULTIPLIER, payload: state.multiplier - power });
+            dispatch({ type: actions.SET_MULTIPLIER, payload: Math.min(1, state.multiplier - power) });
             return 0;
           }
           return prevTimeLeft - 1;
@@ -54,7 +54,7 @@ const Boost = ({ id, title, price, duration, power, requiredLevel, lastTimeActiv
     if (!boosts) {
       boosts = [];
     }
-    
+
     let boostIndex = boosts.findIndex(boost => boost.id === id);
     if (boostIndex !== -1) {
       boosts[boostIndex].date = new Date().toISOString();

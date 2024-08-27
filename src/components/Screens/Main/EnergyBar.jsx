@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { GameContext, actions } from '../../../context/GameContext';
+import EnergyIcon from '../../../assets/flash-thunder-svgrepo-com.svg';
 import { DB } from '../../../db';
 
 const EnergyBar = () => {
@@ -55,7 +56,7 @@ const EnergyBar = () => {
 
   return (
     <div className="energy">
-      <p className="energy-score">🗲 {energy} / 500</p>
+      <p className="energy-score"><div className='energy-icon mask'/> {energy} / 500</p>
       <div className="energy-bar">
         <div className="energy-bar-fill" style={barStyle} />
       </div>

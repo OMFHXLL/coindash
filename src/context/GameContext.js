@@ -8,6 +8,7 @@ const initialState = {
   tgId: null,
   clicks: 0,
   score: 0,
+  totalScore: 0,
   level: 1,
   multiplier: 1,
   energy: 500,
@@ -31,6 +32,7 @@ async function fetchUserData() {
       tgId: data[0].tg_id,
       clicks: data[0].clicks,
       score: data[0].score,
+      totalScore: data[0].total_score,
       energy: data[0].energy,
       level: data[0].level,
       boosts: data[0].boosts,
@@ -56,6 +58,7 @@ const actions = {
   SET_USER_TG_ID: 'SET_USER_TG_ID',
   SET_CLICKS: 'SET_CLICKS',
   SET_SCORE: 'SET_SCORE',
+  SET_TOTAL_SCORE: 'SET_TOTAL_SCORE',
   SET_LEVEL: 'SET_LEVEL',
   SET_MULTIPLIER: 'SET_MULTIPLIER',
   SET_ENERGY: 'SET_ENERGY',
@@ -73,6 +76,8 @@ const reducer = (state, action) => {
       return { ...state, clicks: action.payload };
     case actions.SET_SCORE:
       return { ...state, score: action.payload };
+      case actions.SET_TOTAL_SCORE:
+      return { ...state, totalScore: action.payload };
     case actions.SET_LEVEL:
       return { ...state, level: action.payload };
     case actions.SET_MULTIPLIER:

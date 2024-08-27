@@ -3,7 +3,7 @@ import { DB } from '../../../db';
 import { withGameContext, actions } from '../../../context/GameContext';
 
 const Coin = ({ context }) => {
-  const { tgId, energy, score, clicks, multiplier } = context.state;
+  const { tgId, energy, score, totalScore, clicks, multiplier } = context.state;
 
   const handleCoinClick = async (e) => {
     e.preventDefault();
@@ -31,22 +31,24 @@ const Coin = ({ context }) => {
     });
 
     const newScore = score + multiplier;
+    const newTotalScore = totalScore + multiplier;
     const newClicksScore = clicks + 1;
     const newEnergyScore = energy - 1;
 
     context.dispatch({ type: actions.SET_SCORE, payload: newScore });
+    context.dispatch({ type: actions.SET_TOTAL_SCORE, payload: newTotalScore });
     context.dispatch({ type: actions.SET_CLICKS, payload: newClicksScore });
     context.dispatch({ type: actions.SET_ENERGY, payload: newEnergyScore });
 
     await DB
       .from('users')
-      .update({ score: newScore, clicks: newClicksScore, energy: newEnergyScore })
+      .update({ score: newScore, total_score: newTotalScore, clicks: newClicksScore, energy: newEnergyScore })
       .eq('tg_id', tgId);
   };
 
   return (
     <div>
-      <span className="score noselect">🔘{context.state.score}</span>
+      <p className="score noselect"><div className='coin-icon mask'></div>{context.state.score}</p>
       <button className="coin" onClick={handleCoinClick}></button>
     </div>
   );
