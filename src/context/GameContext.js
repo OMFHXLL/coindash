@@ -13,7 +13,8 @@ const initialState = {
   multiplier: 1,
   energy: 500,
   lastTimeOnline: null,
-  boosts: []
+  boosts: [],
+  isAccountActive: false
 };
 
 async function fetchUserData() {
@@ -36,7 +37,8 @@ async function fetchUserData() {
       energy: data[0].energy,
       level: data[0].level,
       boosts: data[0].boosts,
-      lastTimeOnline: data[0].last_time_online
+      lastTimeOnline: data[0].last_time_online,
+      isAccountActive: true
     };
   }
   const { data: newUser, error: insertError } = await DB
@@ -50,7 +52,20 @@ async function fetchUserData() {
     console.error(insertError);
     return null;
   } 
-
+  return(
+    {
+      tgId: newUser.tg_id,
+      clicks: 0,
+      score: 0,
+      totalScore: 0,
+      level: 1,
+      multiplier: 1,
+      energy: 500,
+      lastTimeOnline: null,
+      boosts: [],
+      isAccountActive: true
+    }
+  )
 }
 
 // Определение типов действий
@@ -64,6 +79,7 @@ const actions = {
   SET_ENERGY: 'SET_ENERGY',
   SET_BOOSTS: 'SET_BOOSTS',
   SET_LAST_TIME_ONLINE: 'SET_LAST_TIME_ONLINE',
+  SET_IS_ACCOUNT_ACTIVE: 'SET_IS_ACCOUNT_ACTIVE',
   SET_INITIAL_STATE: 'SET_INITIAL_STATE',
 };
 
@@ -86,8 +102,10 @@ const reducer = (state, action) => {
       return { ...state, energy: action.payload };
     case actions.SET_BOOSTS:
       return { ...state, boosts: action.payload };
-    case actions.SET_LAST_TIME_ONLINE:
-      return { ...state, lastTimeOnline: action.payload };
+      case actions.SET_LAST_TIME_ONLINE:
+        return { ...state, lastTimeOnline: action.payload };
+        case actions.SET_IS_ACCOUNT_ACTIVE:
+          return { ...state, isAccountActive: action.payload };
     case actions.SET_INITIAL_STATE:
       return { ...state, ...action.payload };
     default:

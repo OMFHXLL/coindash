@@ -3,10 +3,14 @@ import { DB } from '../../../db';
 import { withGameContext, actions } from '../../../context/GameContext';
 
 const Coin = ({ context }) => {
-  const { tgId, energy, score, totalScore, clicks, multiplier } = context.state;
+  const { tgId, energy, score, totalScore, clicks, multiplier, isAccountActive } = context.state;
 
   const handleCoinClick = async (e) => {
     e.preventDefault();
+
+    if (!isAccountActive) {
+      return console.log('Аккаунт не активирован');
+    }
 
     if (energy < 1) {
       return console.log('Энергия закончилась');
