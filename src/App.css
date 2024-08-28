@@ -267,6 +267,7 @@ button {
 }
 .boost__button {
   min-width: 5rem;
+  margin-left: 1rem;
 }
 .boost__button button {
   font-size: 1rem;
