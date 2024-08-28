@@ -1,8 +1,10 @@
+import { IoIosArrowRoundBack } from "react-icons/io";
 
-function BoostHeader() {
+function BoostHeader({ isMainWindow, changeWindow }) {
   return(
     <div className="window__header">
       <h2>Улучшения</h2>
+      {!isMainWindow && <div className="back-button" onClick={() => changeWindow('MAIN')}><IoIosArrowRoundBack/></div>}
     </div>
   )
 }

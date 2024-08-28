@@ -13,7 +13,7 @@ import { DB } from './db';
 
 
 function App() {
-  const [activeWindow, setActiveWindow] = useState('MAIN');
+  const [activeWindow, setActiveWindow] = useState('TASK');
 
   const handleNavigationClick = (window) => {
     setActiveWindow(window);
@@ -26,8 +26,8 @@ function App() {
         <RefScreen isActive={activeWindow === 'REF'}/>
         <TaskScreen isActive={activeWindow === 'TASK'}/>
         <BoostScreen isActive={activeWindow === 'BOOST'}/>
-        <StatsScreen isActive={activeWindow === 'STATS'}/>
-        <Navigation onNavClick={handleNavigationClick}/>
+        {/* <StatsScreen isActive={activeWindow === 'STATS'}/> */}
+        <Navigation activeWindow={activeWindow} onNavClick={handleNavigationClick}/>
       </div>
     </GameProvider>
   );

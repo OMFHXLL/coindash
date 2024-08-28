@@ -9,7 +9,7 @@ const StatsScreen = ({isActive}) => {
   return(
     <div className={isActive ? 'stats window active' : 'stats window'}>
       <StatsHeader/>
-      <div className='stats screen__content'>
+      <div className='stats window__content'>
         <p><span>Уровень:</span><span>{level}</span></p>
         <p><span>Счет:</span><span>{score}</span></p>
         <p><span>Общий счет:</span><span>{totalScore}</span></p>

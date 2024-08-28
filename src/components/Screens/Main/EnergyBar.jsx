@@ -5,14 +5,14 @@ import { DB } from '../../../db';
 
 const EnergyBar = () => {
   const { state, dispatch } = useContext(GameContext);
-  const { energy, tgId, lastTimeOnline } = state;
+  const { energy, energyMultiplier, maxEnergy, tgId, lastTimeOnline } = state;
   const [initialized, setInitialized] = useState(false);
   const [energyState, setEnergyState] = useState(energy);
 
 
   // Устанавливаем стиль для заполненной части EnergyBar
   const barStyle = {
-    width: `${(energy * 100) / 500}%`
+    width: `${(energy * 100) / maxEnergy}%`
   };
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const EnergyBar = () => {
       const lastOnlineTime = new Date(lastTimeOnline);
       const timeDifferenceInSeconds = Math.floor((now - lastOnlineTime) / 1000);
 
-      let newEnergy = Math.min(energy + timeDifferenceInSeconds, 500);
+      let newEnergy = Math.min(energy + timeDifferenceInSeconds * energyMultiplier, maxEnergy);
       
 
       dispatch({ type: actions.SET_ENERGY, payload: newEnergy });
@@ -35,28 +35,34 @@ const EnergyBar = () => {
     };
     setTimeout(() => {
       calculateInitialEnergy();
-    }, 100);
+    }, 200);
   }, []);
 
   useEffect(() => {
     if (initialized) {
       const intervalId = setInterval(async () => {
-        if (energy < 500) {
-          const newEnergyScore = Math.min(energy + 1, 500); // Ограничиваем максимальную энергию
+        if (energy < maxEnergy) {
+          const newEnergyScore = Math.min(energy + energyMultiplier, maxEnergy); // Ограничиваем максимальную энергию
           dispatch({ type: actions.SET_ENERGY, payload: newEnergyScore });
           await DB.from('users')
-            .update({ energy: newEnergyScore, last_time_online: new Date().toISOString() })
+            .update({ energy: newEnergyScore, max_energy: maxEnergy, last_time_online: new Date().toISOString() })
             .eq('tg_id', tgId);
         }
       }, 1000);
 
       return () => clearInterval(intervalId);
     }
-  }, [energy, tgId, dispatch, initialized]);
+  }, [energy, energyMultiplier, maxEnergy, tgId, dispatch, initialized]);
+
+  useEffect(() => {
+    if (energy > maxEnergy) {
+      dispatch({ type: actions.SET_ENERGY, payload: maxEnergy });
+    }
+  }, [maxEnergy]);
 
   return (
     <div className="energy">
-      <p className="energy-score"><div className='energy-icon mask'/> {energy} / 500</p>
+      <div className="energy-score"><div className='energy-icon mask'></div> {energy} / {maxEnergy}</div>
       <div className="energy-bar">
         <div className="energy-bar-fill" style={barStyle} />
       </div>

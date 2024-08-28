@@ -3,7 +3,17 @@ import { GameContext, actions } from '../../../context/GameContext';
 import { formatTime } from '../../../utils/utils';
 import { DB } from '../../../db';
 
-const Boost = ({ id, title, price, duration, power, requiredLevel, lastTimeActive }) => {
+import { PiCoinsFill } from "react-icons/pi";
+import { AiFillThunderbolt } from "react-icons/ai";
+import { PiTimerFill } from "react-icons/pi";
+
+const icons = {
+    'power_compose': <PiCoinsFill className="boost-main-button-icon"/>,
+    'energy_compose': <AiFillThunderbolt className="boost-main-button-icon"/>,
+    'energy_boost': <PiTimerFill className="boost-main-button-icon"/>
+  }
+
+const Boost = ({ type, id, title, price, duration, power, requiredLevel, lastTimeActive }) => {
   const { state, dispatch } = useContext(GameContext);
   const tgId = state.tgId;
   const [timeLeft, setTimeLeft] = useState(0);
@@ -15,7 +25,17 @@ const Boost = ({ id, title, price, duration, power, requiredLevel, lastTimeActiv
 
     if (elapsedTime < duration * 1000) {
       setTimeLeft(duration - Math.floor(elapsedTime / 1000));
-      dispatch({ type: actions.SET_MULTIPLIER, payload: state.multiplier + power });
+      switch (type) {
+        case 'power_compose':
+          dispatch({ type: actions.SET_MULTIPLIER, payload: state.multiplier + power });
+          break;
+        case 'energy_compose':
+          dispatch({ type: actions.SET_MAX_ENERGY, payload: state.maxEnergy + power });
+          break;
+        case 'energy_boost':
+          dispatch({ type: actions.SET_ENERGY_MULTIPLIER, payload: state.energyMultiplier + power });
+          break;
+      }
     } else {
       setTimeLeft(0);
     }
@@ -27,7 +47,17 @@ const Boost = ({ id, title, price, duration, power, requiredLevel, lastTimeActiv
         setTimeLeft(prevTimeLeft => {
           if (prevTimeLeft <= 1) {
             clearInterval(timerId);
-            dispatch({ type: actions.SET_MULTIPLIER, payload: Math.min(1, state.multiplier - power) });
+            switch (type) {
+              case 'power_compose':
+                dispatch({ type: actions.SET_MULTIPLIER, payload: Math.min(1, state.multiplier - power) });
+                break;
+              case 'energy_compose':
+                dispatch({ type: actions.SET_MAX_ENERGY, payload: Math.min(500, state.maxEnergy - power) });
+                break;
+              case 'energy_boost':
+                dispatch({ type: actions.SET_ENERGY_MULTIPLIER, payload: Math.min(1, state.energyMultiplier - power) });
+                break;
+            }
             return 0;
           }
           return prevTimeLeft - 1;
@@ -68,6 +98,8 @@ const Boost = ({ id, title, price, duration, power, requiredLevel, lastTimeActiv
       }
       return boost;
     });
+
+    console.log(updatedBoosts)
     
     const { updateError } = await DB
       .from('users')
@@ -82,25 +114,35 @@ const Boost = ({ id, title, price, duration, power, requiredLevel, lastTimeActiv
 
   const handleBoostClick = () => {
     if (state.score >= price && timeLeft === 0) {
-      dispatch({ type: actions.SET_MULTIPLIER, payload: state.multiplier + power });
       dispatch({ type: actions.SET_SCORE, payload: state.score - price });
+      switch (type) {
+        case 'power_compose':
+          dispatch({ type: actions.SET_MULTIPLIER, payload: state.multiplier + power });
+          break;
+        case 'energy_compose':
+          dispatch({ type: actions.SET_MAX_ENERGY, payload: state.maxEnergy + power });
+          break;
+        case 'energy_boost':
+          dispatch({ type: actions.SET_ENERGY_MULTIPLIER, payload: state.energyMultiplier + power });
+          break;
+      }
       updateBoostDate();
       setTimeLeft(duration);
     }
   };
 
   return (
-    <tr className={requiredLevel >= state.level ? 'boost' : 'boost disabled'}>
-      <th className='boost__title'>{title}</th>
-      <th className='boost__button'>
+    <div className='boost a-btn'>
+      <div className='boost__title'>{icons[type]}{title}</div>
+      <div className={timeLeft > 0 ? 'boost__button active' : 'boost__button'}>
         <button
             onClick={handleBoostClick}
-            disabled={state.score < price || timeLeft > 0}
+            disabled={state.score < price}
             >
           {timeLeft > 0 ? formatTime(timeLeft) : price}
         </button>
-      </th>
-    </tr>
+      </div>
+    </div>
   );
 };
 

@@ -12,6 +12,8 @@ const initialState = {
   level: 1,
   multiplier: 1,
   energy: 500,
+  energyMultiplier: 1,
+  maxEnergy: 500,
   lastTimeOnline: null,
   boosts: [],
   isAccountActive: false
@@ -61,6 +63,8 @@ async function fetchUserData() {
       level: 1,
       multiplier: 1,
       energy: 500,
+      energyMultiplier: 1,
+      maxEnergy: 500,
       lastTimeOnline: null,
       boosts: [],
       isAccountActive: true
@@ -77,6 +81,8 @@ const actions = {
   SET_LEVEL: 'SET_LEVEL',
   SET_MULTIPLIER: 'SET_MULTIPLIER',
   SET_ENERGY: 'SET_ENERGY',
+  SET_ENERGY_MULTIPLIER: 'SET_ENERGY_MULTIPLIER',
+  SET_MAX_ENERGY: 'SET_MAX_ENERGY',
   SET_BOOSTS: 'SET_BOOSTS',
   SET_LAST_TIME_ONLINE: 'SET_LAST_TIME_ONLINE',
   SET_IS_ACCOUNT_ACTIVE: 'SET_IS_ACCOUNT_ACTIVE',
@@ -100,6 +106,10 @@ const reducer = (state, action) => {
       return { ...state, multiplier: action.payload };
     case actions.SET_ENERGY:
       return { ...state, energy: action.payload };
+    case actions.SET_ENERGY_MULTIPLIER:
+      return { ...state, energyMultiplier: action.payload };
+    case actions.SET_MAX_ENERGY:
+      return { ...state, maxEnergy: action.payload };
     case actions.SET_BOOSTS:
       return { ...state, boosts: action.payload };
       case actions.SET_LAST_TIME_ONLINE:

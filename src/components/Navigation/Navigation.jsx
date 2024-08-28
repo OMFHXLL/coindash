@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import Button from './Button';
 
-const Navigation = ({ onNavClick }) => {
+const Navigation = ({ activeWindow, onNavClick }) => {
   const [isMainVisible, setMainVisible] = useState(false);
 
   function setMain(link) {
@@ -14,11 +14,11 @@ const Navigation = ({ onNavClick }) => {
 
   return (
     <nav className="nav">
-      <Button onClickButton={onNavClick} showMainButton={setMain} link={'REF'} />
-      <Button onClickButton={onNavClick} showMainButton={setMain} link={'TASK'} />
-      {isMainVisible && <Button onClickButton={onNavClick} showMainButton={setMain} link={'MAIN'} />}
-      <Button onClickButton={onNavClick} showMainButton={setMain} link={'BOOST'} />
-      <Button onClickButton={onNavClick} showMainButton={setMain} link={'STATS'} />
+      <Button activeWindow={activeWindow} onClickButton={onNavClick} showMainButton={setMain} link={'REF'} />
+      <Button activeWindow={activeWindow} onClickButton={onNavClick} showMainButton={setMain} link={'TASK'} />
+      <Button activeWindow={activeWindow} onClickButton={onNavClick} showMainButton={setMain} link={'BOOST'} />
+      {/* <Button onClickButton={onNavClick} showMainButton={setMain} link={'STATS'} /> */}
+      {isMainVisible && <Button activeWindow={activeWindow} onClickButton={onNavClick} showMainButton={setMain} link={'MAIN'} />}
     </nav>
   );
 };

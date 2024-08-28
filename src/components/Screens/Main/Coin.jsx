@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { DB } from '../../../db';
 import { withGameContext, actions } from '../../../context/GameContext';
+import { RiCopperCoinFill } from "react-icons/ri";
 
 const Coin = ({ context }) => {
   const { tgId, energy, score, totalScore, clicks, multiplier, isAccountActive } = context.state;
@@ -52,7 +53,8 @@ const Coin = ({ context }) => {
 
   return (
     <div>
-      <p className="score noselect"><div className='coin-icon mask'></div>{context.state.score}</p>
+      {/* <p className="score noselect">{context.state.score}</p> */}
+      <p className="score noselect"><RiCopperCoinFill className='coin-icon'/>{context.state.score}</p>
       <button className="coin" onClick={handleCoinClick}></button>
     </div>
   );

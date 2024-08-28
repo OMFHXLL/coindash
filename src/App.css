@@ -14,6 +14,11 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+button {
+  outline: none;
+  border: none;
+}
+
 .app {
   height: var(--tg-viewport-height);
   max-height: var(--tg-viewport-height);
@@ -21,31 +26,17 @@ body {
   background-color: #333;
 }
 
-.window {
-  padding: 3rem 0 1rem;
-  position: fixed;
-  width: 100%;
-  height: calc(100% - 5rem);
-  top: 0;
-  left: 0;
-  opacity: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-.window.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.window__header {
-  position: absolute;
-  width: 100%;
-  display: flex;
+/* BUTTONS */
+.a-btn {
+  border-radius: 1rem;
+  color: #fff;
+  background-color: #434343;
+  padding: .5rem .7rem;
+  display: inline-flex;
+  justify-content: center;
   align-items: center;
-  top: 0;
-  left: 0;
-  height: 3rem;
-  padding: 0 1rem
+  font-weight: 600;
+  min-height: 5.2rem;
 }
 
 
@@ -70,6 +61,64 @@ body {
   -webkit-mask-position: center;
 }
 
+.back-button {
+  font-size: 2.6rem;
+  display: flex;
+  align-items: center;
+}
+
+
+.window {
+  padding: 3.2rem 0 1rem;
+  position: fixed;
+  width: 100%;
+  height: calc(100% - 5rem);
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.window.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.window__header {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  top: 0;
+  left: 0;
+  height: 3rem;
+  padding: 0 1rem
+}
+
+.window__content {
+  position: relative;
+  padding: 0 1rem;
+  height: 100%;
+  max-height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.window__content::-webkit-scrollbar {
+  width: 0;
+}
+
+.window__screen {
+  display: none;
+}
+.window__screen.active {
+  display: block;
+}
+
+
+
+
+
 
 
 .energy-icon {
@@ -82,11 +131,8 @@ body {
 }
 .coin-icon {
   width: 2.4rem;
-  aspect-ratio: 1/1;
   margin-right: .2rem;
-  background: #fff;
-  mask-image: url(./assets/copper-coin-svgrepo-com.svg);
-  -webkit-mask-image: url(./assets/copper-coin-svgrepo-com.svg);
+  fill: #fff;
 }
 
 
@@ -171,46 +217,63 @@ body {
 
 .nav-button {
   flex-grow: 1;
-  font-size: calc(1 * var(--index));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(2.8 * var(--index));
   border: none;
   height: 100%;
-  background: #acacac;
-  color: #333;
+  background: #434343;
+  color: #fff;
   cursor: pointer;
-  transition: background.2s ease-in-out;
+  transition: none;
   border-radius: 8px;
 }
-
-
-.screen__content {
-  padding: 0 1rem;
-  max-height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-.screen__content::-webkit-scrollbar {
-  width: 0;
+.nav-button.active {
+  transition: all .2s ease-in-out;
+  background: #acacac;
+  color: #222;
 }
 
 
 
-.boost-table {
+
+
+
+.boost-main-button {
+  font-size: 1.2rem;
   width: 100%;
-  border-spacing: 0 .5rem;
+  margin-bottom: .8rem;
+  justify-content: start;
+  padding: 1rem 1.1rem;
+}
+.boost-main-button-icon {
+  font-size: 3rem;
+  margin-right: .8rem;
+}
+.boost__list {
+  width: 100%;
 }
 .boost {
+  padding: .4rem 1.1rem;
   margin: .4rem 0;
+  width: 100%;
+  justify-content: space-between;
 }
 .boost__title {
   text-align: start;
+  display: flex;
+  align-items: center;
 }
 .boost__button {
-  width: 1px;
+  min-width: 5rem;
 }
 .boost__button button {
-  padding: .5rem .8rem;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: .8rem .8rem;
   width: 100%;
-  border-radius: 4px;
+  border-radius: 8px;
   border: none;
   outline: none;
 }
