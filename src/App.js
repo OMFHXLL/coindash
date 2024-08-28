@@ -13,7 +13,7 @@ import { DB } from './db';
 
 
 function App() {
-  const [activeWindow, setActiveWindow] = useState('TASK');
+  const [activeWindow, setActiveWindow] = useState('MAIN');
 
   const handleNavigationClick = (window) => {
     setActiveWindow(window);
