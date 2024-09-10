@@ -1,3 +1,4 @@
+const tg = window.document;
 const isTg = true;
 
 let tgUser = {}
