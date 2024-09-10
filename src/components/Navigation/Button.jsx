@@ -19,7 +19,7 @@ const icons = {
 function Button({ activeWindow, link, onClickButton, showMainButton, hidden = false }) {
   return (
     <button 
-      className={`${activeWindow === link ? "nav-button active" : "nav-button"} ${hidden ? "hidden" : ""}`} 
+      className={`${activeWindow === link ? "nav-button c-btn active" : "nav-button c-btn"} ${hidden ? "hidden" : ""}`} 
       onClick={() => { onClickButton(link); showMainButton(link); }}
     >
       <img src={icons[link]} className='nav-button-icon'/>

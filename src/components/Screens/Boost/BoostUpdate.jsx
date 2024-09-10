@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { DB } from '../../../db';
 import { GameContext, actions } from '../../../context/GameContext';
 
@@ -48,8 +48,10 @@ const BoostUpdate = ({ type, title, description, prices, power, icon, close }) =
       <div className="update-boost-container">
         <div className="update-boost-icon"><img src={icon} alt={`${type}-icon`} /></div>
         <h3 className="update-boost-title">{title}</h3>
-        <p className="update-boost-description">{description}</p>
-        <button className="update-boost-button a-btn" onClick={upgradeBoost} disabled={score < price}><div className="coin-icon"></div>{price}</button>
+        <p className="update-boost-description" dangerouslySetInnerHTML={{ __html: description }}></p>
+        <p className="update-boost-avialable">Доступно {type !== 'multitap' ? <span>навсегда</span> : <><span>2 раза</span> в день</>}</p>
+        <div className="update-boost-price-container">{ type !== 'multitap' ? <><span>Уровень {level}</span><p className="x-div">x</p><div className="update-boost-price"><div className="coin-icon"></div>{price}</div></> : <div className="update-boost-daily">ЕЖЕДНЕВНЫЙ БОНУС</div>}</div>
+        <button className="update-boost-button a-btn" onClick={upgradeBoost} disabled={score < price || prices[level - 1] === undefined}>{prices[level - 1] === undefined ? "Максимальный уровень" : "Улучшить"}</button>
       </div>
     </div>
   )

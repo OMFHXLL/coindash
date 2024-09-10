@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { GameContext } from '../context/GameContext';
+import { formatScore } from '../utils/utils';
 
 function ScreenScore() {
   const { state } = useContext(GameContext);
@@ -10,7 +11,7 @@ function ScreenScore() {
       <div className="screen-score-title">Баланс</div>
       <div className="screen-score">
         <div className="coin-icon"></div>
-        {score}
+        {formatScore(score)}
       </div>
     </div>
   )

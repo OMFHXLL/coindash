@@ -25,4 +25,8 @@ function formatTime(seconds) {
   return result;
 }
 
-export { formatTime }
+function formatScore(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+export { formatTime, formatScore }

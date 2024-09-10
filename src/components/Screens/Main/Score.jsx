@@ -1,26 +1,23 @@
 import { GameContext, actions } from '../../../context/GameContext';
+import Rank from './Rank';
+import { formatScore } from '../../../utils/utils';
 import { useContext } from 'react';
 
-const ranks = [
-  'Новичок',
-  'Молодая монета',
-  'Перспективная монета',
-  'Средняя капитализация',
-  'Высокая капитализация',
-  'Топ монета',
-  'Премиум монета',
-  'Мировой лидер',
-  'Крипто гегемон',
-]
 
 function Score ({ image }) {
-  const { state, dispatch } = useContext(GameContext);
-  const { score, level } = state;
+  const { state } = useContext(GameContext);
+  const { score } = state;
 
   return(
     <div className="score">
-      <div className='score__content'><img className='score__image' src={image} alt="" />{score}</div>
-      <div className="score__rank">{ranks[level - 1]}</div>
+      <div className='score__content'>
+        <div className="score__icon">
+          <div className='coin-image'></div>
+        </div>
+        <div className="score__conversion">{(score * 0.002).toFixed(3)}</div>
+        {formatScore(score)}
+      </div>
+      <Rank/>
     </div>
   )
 }
