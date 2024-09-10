@@ -25,7 +25,7 @@ const BoostsArray = [
   { id: 14, type: 'power_compose', title: '+14 дохода за клик', price: 500000, duration: 300, power: 14},
   { id: 15, type: 'power_compose', title: '+15 дохода за клик', price: 600000, duration: 300, power: 15},
 
-  { id: 16, type: 'energy_compose', title: '+500 макс. энергии', price: 200, duration: 10, power: 500},
+  { id: 16, type: 'energy_compose', title: '+500 макс. энергии', price: 200, duration: 300, power: 500},
   { id: 17, type: 'energy_compose', title: '+1000 макс. энергии', price: 500, duration: 300, power: 1000},
   { id: 18, type: 'energy_compose', title: '+1500 макс. энергии', price: 1000, duration: 300, power: 1500},
   { id: 19, type: 'energy_compose', title: '+2000 макс. энергии', price: 2000, duration: 300, power: 2000},

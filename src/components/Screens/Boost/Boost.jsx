@@ -1,149 +1,64 @@
+import BoostUpdate from './BoostUpdate';
 import { useContext, useEffect, useState } from 'react';
-import { GameContext, actions } from '../../../context/GameContext';
-import { formatTime } from '../../../utils/utils';
 import { DB } from '../../../db';
+import { GameContext, actions } from '../../../context/GameContext';
 
-import { PiCoinsFill } from "react-icons/pi";
-import { AiFillThunderbolt } from "react-icons/ai";
-import { PiTimerFill } from "react-icons/pi";
 
-const icons = {
-    'power_compose': <PiCoinsFill className="boost-main-button-icon"/>,
-    'energy_compose': <AiFillThunderbolt className="boost-main-button-icon"/>,
-    'energy_boost': <PiTimerFill className="boost-main-button-icon"/>
-  }
 
-const Boost = ({ type, id, title, price, duration, power, requiredLevel, lastTimeActive }) => {
+
+
+function Boost({ type, title, description, prices, power, icon }) {
   const { state, dispatch } = useContext(GameContext);
-  const tgId = state.tgId;
-  const [timeLeft, setTimeLeft] = useState(0);
+  const { boosts, tgId, score } = state;
+  const level = boosts[type] !== undefined ? boosts[type] : 0;
+  const price = prices[level - 1];
+
+  const [showBoostUpdate, setShowBoostUpdate] = useState(false);
 
   useEffect(() => {
-    const lastActiveTime = new Date(lastTimeActive).getTime();
-    const currentTime = new Date().getTime();
-    const elapsedTime = currentTime - lastActiveTime;
-
-    if (elapsedTime < duration * 1000) {
-      setTimeLeft(duration - Math.floor(elapsedTime / 1000));
-      switch (type) {
-        case 'power_compose':
-          dispatch({ type: actions.SET_MULTIPLIER, payload: state.multiplier + power });
-          break;
-        case 'energy_compose':
-          dispatch({ type: actions.SET_MAX_ENERGY, payload: state.maxEnergy + power });
-          break;
-        case 'energy_boost':
-          dispatch({ type: actions.SET_ENERGY_MULTIPLIER, payload: state.energyMultiplier + power });
-          break;
-      }
-    } else {
-      setTimeLeft(0);
+    switch (type) {
+      case 'power_compose':
+        dispatch({ type: actions.SET_MULTIPLIER, payload: power * level });
+        break;
+      case 'energy_limit':
+        dispatch({ type: actions.SET_MAX_ENERGY, payload: power * level });
+        break;
+      case 'energy_boost':
+        dispatch({ type: actions.SET_ENERGY_MULTIPLIER, payload: power * level });
+        break;
+      default:
+        break;
     }
-  }, [lastTimeActive, duration]);
+  }, [boosts, type, level, power, dispatch]);
 
-  useEffect(() => {
-    if (timeLeft > 0) {
-      const timerId = setInterval(() => {
-        setTimeLeft(prevTimeLeft => {
-          if (prevTimeLeft <= 1) {
-            clearInterval(timerId);
-            switch (type) {
-              case 'power_compose':
-                dispatch({ type: actions.SET_MULTIPLIER, payload: Math.min(1, state.multiplier - power) });
-                break;
-              case 'energy_compose':
-                dispatch({ type: actions.SET_MAX_ENERGY, payload: Math.min(500, state.maxEnergy - power) });
-                break;
-              case 'energy_boost':
-                dispatch({ type: actions.SET_ENERGY_MULTIPLIER, payload: Math.min(1, state.energyMultiplier - power) });
-                break;
-            }
-            return 0;
-          }
-          return prevTimeLeft - 1;
-        });
-      }, 1000);
-
-      return () => clearInterval(timerId);
-    } 
-  }, [timeLeft]);
-
-  const updateBoostDate = async () => {
-    const { data, error } = await DB
-      .from('users')
-      .select('*')
-      .eq('tg_id', tgId)
-      
-    
-    if (error) {
-      console.error('Error fetching boosts:', error);
-      return;
-    }
-    
-    let boosts = data[0].boosts;
-    if (!boosts) {
-      boosts = [];
-    }
-
-    let boostIndex = boosts.findIndex(boost => boost.id === id);
-    if (boostIndex !== -1) {
-      boosts[boostIndex].date = new Date().toISOString();
-    } else {
-      boosts.push({ id: id, date: new Date().toISOString() });
-    }
-    
-    const updatedBoosts = boosts.map(boost => {
-      if (boost.id === id) {
-        boost.date = new Date().toISOString();
-      }
-      return boost;
-    });
-
-    console.log(updatedBoosts)
-    
-    const { updateError } = await DB
-      .from('users')
-      .update({ boosts: updatedBoosts, score: state.score - price })
-      .eq('tg_id', tgId);
-  
-    if (updateError) {
-      console.error('Error updating boosts:', updateError);
-      return;
+  const openBoosUpdate = () => {
+    setShowBoostUpdate(true);
+    dispatch({ type: actions.SET_HIDE_NAV, payload: true })
+  }
+  const closeBoosUpdate = (e) => {
+    const container = document.querySelector('.update-boost-container');
+    if (container && !container.contains(e.target)) {
+      setShowBoostUpdate(false);
+      dispatch({ type: actions.SET_HIDE_NAV, payload: false })
     }
   }
-
-  const handleBoostClick = () => {
-    if (state.score >= price && timeLeft === 0) {
-      dispatch({ type: actions.SET_SCORE, payload: state.score - price });
-      switch (type) {
-        case 'power_compose':
-          dispatch({ type: actions.SET_MULTIPLIER, payload: state.multiplier + power });
-          break;
-        case 'energy_compose':
-          dispatch({ type: actions.SET_MAX_ENERGY, payload: state.maxEnergy + power });
-          break;
-        case 'energy_boost':
-          dispatch({ type: actions.SET_ENERGY_MULTIPLIER, payload: state.energyMultiplier + power });
-          break;
-      }
-      updateBoostDate();
-      setTimeLeft(duration);
-    }
-  };
 
   return (
-    <div className='boost a-btn'>
-      <div className='boost__title'>{icons[type]}{title}</div>
-      <div className={timeLeft > 0 ? 'boost__button active' : 'boost__button'}>
-        <button
-            onClick={handleBoostClick}
-            disabled={state.score < price}
-            >
-          {timeLeft > 0 ? formatTime(timeLeft) : price}
-        </button>
+    <div className="boost a-btn" id={type}>
+      <div className="boost__icon"><img src={icon} alt={`${type}-icon`} /></div>
+      <div className="boost__text">
+        <div className='boost__title'>{title}</div>
+        <div className="boost__info">
+          <div className="boost__price"><div className="coin-icon"></div>{price}</div>
+          <div className="boost__level">Ур. {level}</div>
+        </div>
       </div>
+      <div className="boost__button">
+        <button onClick={openBoosUpdate}>Улучшить<span className="boost-arrow">&raquo;</span></button>
+      </div>
+      {showBoostUpdate && <BoostUpdate type={type} title={title} description={description} prices={prices} power={power} icon={icon} close={closeBoosUpdate}/>}
     </div>
-  );
-};
+  )
+}
 
 export default Boost;

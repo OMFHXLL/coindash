@@ -16,7 +16,14 @@ const initialState = {
   maxEnergy: 500,
   lastTimeOnline: null,
   boosts: [],
-  isAccountActive: false
+  isAccountActive: false,
+  hideNav: false
+};
+
+const boosts = {
+  power_compose: 1,
+  energy_limit: 1,
+  energy_boost: 1
 };
 
 async function fetchUserData() {
@@ -37,6 +44,7 @@ async function fetchUserData() {
       score: data[0].score,
       totalScore: data[0].total_score,
       energy: data[0].energy,
+      maxEnergy: data[0].max_energy,
       level: data[0].level,
       boosts: data[0].boosts,
       lastTimeOnline: data[0].last_time_online,
@@ -46,7 +54,7 @@ async function fetchUserData() {
   const { data: newUser, error: insertError } = await DB
     .from('users')
     .insert(
-      { tg_id: userId, lang: tgUser.language, username: tgUser.username }
+      { tg_id: userId, lang: tgUser.language, username: tgUser.username, boosts: boosts }
     )
     .single();
 
@@ -66,7 +74,7 @@ async function fetchUserData() {
       energyMultiplier: 1,
       maxEnergy: 500,
       lastTimeOnline: null,
-      boosts: [],
+      boosts: boosts,
       isAccountActive: true
     }
   )
@@ -86,6 +94,7 @@ const actions = {
   SET_BOOSTS: 'SET_BOOSTS',
   SET_LAST_TIME_ONLINE: 'SET_LAST_TIME_ONLINE',
   SET_IS_ACCOUNT_ACTIVE: 'SET_IS_ACCOUNT_ACTIVE',
+  SET_HIDE_NAV: 'SET_HIDE_NAV',
   SET_INITIAL_STATE: 'SET_INITIAL_STATE',
 };
 
@@ -112,10 +121,12 @@ const reducer = (state, action) => {
       return { ...state, maxEnergy: action.payload };
     case actions.SET_BOOSTS:
       return { ...state, boosts: action.payload };
-      case actions.SET_LAST_TIME_ONLINE:
-        return { ...state, lastTimeOnline: action.payload };
-        case actions.SET_IS_ACCOUNT_ACTIVE:
-          return { ...state, isAccountActive: action.payload };
+    case actions.SET_LAST_TIME_ONLINE:
+      return { ...state, lastTimeOnline: action.payload };
+    case actions.SET_IS_ACCOUNT_ACTIVE:
+      return { ...state, isAccountActive: action.payload };
+    case actions.SET_HIDE_NAV:
+      return { ...state, hideNav: action.payload };
     case actions.SET_INITIAL_STATE:
       return { ...state, ...action.payload };
     default:

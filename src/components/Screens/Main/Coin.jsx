@@ -27,7 +27,7 @@ const Coin = ({ context }) => {
     // Запускаем анимацию
     requestAnimationFrame(() => {
         multiplierAnimation.style.transition = 'transform 1s, opacity 1s';
-        multiplierAnimation.style.transform = `translateY(-150px)`;
+        multiplierAnimation.style.transform = `translate(-50%, -170px) scale(1.7)`;
         multiplierAnimation.style.opacity = '0';
     });
 
@@ -54,8 +54,9 @@ const Coin = ({ context }) => {
   return (
     <div>
       {/* <p className="score noselect">{context.state.score}</p> */}
-      <p className="score noselect"><RiCopperCoinFill className='coin-icon'/>{context.state.score}</p>
-      <button className="coin" onClick={handleCoinClick}></button>
+      <div className="coin" onClick={handleCoinClick}>
+        <div className="coin-image"></div>
+      </div>
     </div>
   );
 };

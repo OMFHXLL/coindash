@@ -1,5 +1,3 @@
-const tg = window.Telegram.WebApp;
-
 const isTg = true;
 
 let tgUser = {}
@@ -15,6 +13,7 @@ if (!isTg) {
     language: 'ru'
   }
 } else {
+  tg = window.Telegram.WebApp;
   tgUser = {
     id: tg?.initDataUnsafe?.user?.id,
     username: tg?.initDataUnsafe?.user?.username,

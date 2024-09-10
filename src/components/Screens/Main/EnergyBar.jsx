@@ -36,7 +36,7 @@ const EnergyBar = () => {
     setTimeout(() => {
       calculateInitialEnergy();
     }, 200);
-  }, []);
+  }, [initialized]);
 
   useEffect(() => {
     if (initialized) {
