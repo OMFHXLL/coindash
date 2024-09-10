@@ -13,7 +13,7 @@ const Coin = ({ context }) => {
       return console.log('Аккаунт не активирован');
     }
 
-    if (energy < 1) {
+    if (energy - multiplier < 0) {
       return console.log('Энергия закончилась');
     }
     const multiplierAnimation = document.createElement('div');
@@ -44,7 +44,7 @@ const Coin = ({ context }) => {
     context.dispatch({ type: actions.SET_TOTAL_SCORE, payload: newTotalScore });
     context.dispatch({ type: actions.SET_CLICKS, payload: newClicksScore });
     context.dispatch({ type: actions.SET_ENERGY, payload: newEnergyScore });
-
+    
     await DB
       .from('users')
       .update({ score: newScore, total_score: newTotalScore, clicks: newClicksScore, energy: newEnergyScore })
