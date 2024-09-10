@@ -1,4 +1,5 @@
 import React, { createContext, useReducer, useEffect, useState } from 'react';
+import Preloader from '../components/Preloader';
 import { DB } from '../db';
 import { tgUser, initTgApp } from '../hooks/useTelegram';
 
@@ -149,14 +150,16 @@ const GameProvider = ({ children }) => {
         dispatch({ type: actions.SET_INITIAL_STATE, payload: userData });
         console.log(userData);
       }
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 100);
     }
 
     loadUserData();
   }, []);
 
   if (loading) {
-    return <div>Загрузка...</div>;
+    return <Preloader loading={true}/>;
   }
 
   return (

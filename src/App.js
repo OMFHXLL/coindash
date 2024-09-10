@@ -1,6 +1,7 @@
 import React, { Component, useEffect, useState } from 'react';
 import './App.css';
 import { GameProvider } from './context/GameContext';
+import Preloader from './components/Preloader';
 import Background from './components/Background';
 import MainScreen from './components/Screens/Main/MainScreen';
 import RefScreen from './components/Screens/Ref/RefScreen';
@@ -23,6 +24,7 @@ function App() {
   return (
     <GameProvider>
       <div className='app'>
+        <Preloader/>
         <Background/>
         <MainScreen isActive={activeWindow === 'TAP'}/>
         <RefScreen isActive={activeWindow === 'REF'}/>
