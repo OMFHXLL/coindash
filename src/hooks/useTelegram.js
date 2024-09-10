@@ -29,6 +29,8 @@ if (!isTg) {
 const initTgApp = () => {
   if (isTg) {
     tg.disableVerticalSwipes();
+    tg.setHeaderColor("#17211f");
+    tg.setBackgroundColor("#0c1210");
     tg.expand();
   }
 }
