@@ -1,4 +1,4 @@
-const tg = window.document;
+let tg;
 const isTg = true;
 
 let tgUser = {}
