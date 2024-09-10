@@ -38,7 +38,7 @@ const Coin = ({ context }) => {
     const newScore = score + multiplier;
     const newTotalScore = totalScore + multiplier;
     const newClicksScore = clicks + 1;
-    const newEnergyScore = energy - 1;
+    const newEnergyScore = energy - multiplier;
 
     context.dispatch({ type: actions.SET_SCORE, payload: newScore });
     context.dispatch({ type: actions.SET_TOTAL_SCORE, payload: newTotalScore });
