@@ -294,13 +294,13 @@ button {
   height: 100%;
   overflow: hidden;
   border-radius: 6px;
-  font-size: .75rem;
+  font-size: .65rem;
   opacity: .8;
 }
 .window__header-item button img {
   width: 1rem;
   height: 1rem;
-  margin: 0 .5rem 0 .3rem;
+  margin: 0 .2rem 0 .1rem;
 }
 
 .window__title {
@@ -345,7 +345,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: .85rem;
+  font-size: .65rem;
   font-weight: 500;
   height: 100%;
   border-radius: 6px;
@@ -624,7 +624,7 @@ button {
   width: 100%;
 }
 .item__title {
-  font-size: .8rem;
+  font-size: .65rem;
   font-weight: normal;
   text-align: start;
   display: flex;
@@ -632,8 +632,8 @@ button {
   padding-right: 1rem;
 }
 .item__reward {
-  font-size: .72rem;
-  font-weight: 500;
+  font-size: .6rem;
+  font-weight: 300;
   margin-top: 0.2rem;
 }
 .item__reward .coin-icon {
@@ -901,7 +901,7 @@ button {
 
 .ref__p {
   margin-top: 1.2rem;
-  font-size: .7rem;
+  font-size: .6rem;
   line-height: 1.1rem;
   padding-left: 1.4rem;
 }
@@ -918,7 +918,7 @@ button {
 }
 .ref__stat h3 {
   display: inline-block;
-  font-size: 1rem;
+  font-size: .8rem;
   font-weight: 500;
 }
 .ref__stat-number {
