@@ -5,6 +5,10 @@
   --tg-viewport-height: 100vh;
   --tg-viewport-width: 100vw;
   --c-1: #0c1210;
+  --c-2: #091e16;
+  --c-3: #224d3d;
+  --c-4: #00985ee9;
+  --c-10: #ddad35;
   --o-1: rgba(255, 255, 255, 0.11);
   --o-2: rgba(0, 255, 157, 0.08);
 }
@@ -144,7 +148,11 @@ button {
   align-items: center;
 }
 .a-btn:disabled {
-  filter: brightness(50%);
+  background: #878787;
+  filter: brightness(80%);
+}
+.a-btn:active:not(:disabled) {
+  background: var(--c-4);
 }
 
 .b-btn {
@@ -204,10 +212,10 @@ button {
 }
 
 .coin-icon {
-  height: 1em;
+  height: 1.1em;
   aspect-ratio: 1/1;
   display: inline-block;
-  background-image: url(./assets/image/coin.png);
+  background-image: url(./assets/image/coin-icon.png);
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -218,10 +226,18 @@ button {
   display: flex;
   align-items: center;
 }
+.arrow {
+  font-size: 1.55rem;
+  float: right;
+  font-weight: 200;
+  line-height: 0.1;
+  display: inline-block;
+  transform: translate(10%, -46%);
+}
 
 
 .window {
-  padding: 10rem 0 0;
+  padding: 8.2rem 0 0;
   position: fixed;
   width: 100%;
   height: calc(100% - 6.4rem);
@@ -238,19 +254,65 @@ button {
 
 .window__header {
   position: absolute;
-  width: 100%;
+  top: 6.5rem;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  width: calc(100vw - 4rem);
+  height: 2.3rem;
+  max-height: 2.3rem;
+  padding: .3rem;
+  background: var(--c-2);
+  border-radius: 6px;
+  border: 1px solid var(--c-3);
+  overflow: hidden;
+}
+.window__header-item {
+  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  top: 0;
-  left: 0;
-  height: 3rem;
-  padding: 0 1rem
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  font-size: .66rem;
+}
+.window__header-item span {
+  max-width: 70%;
+  overflow: hidden;
+}
+.window__header-item-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-right: .2rem;
+}
+.window__header-item button {
+  padding: .3rem;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 6px;
+  font-size: .75rem;
+  opacity: .8;
+}
+.window__header-item button img {
+  width: 1rem;
+  height: 1rem;
+  margin: 0 .5rem 0 .3rem;
+}
+
+.window__title {
+  font-size: .95rem;
+  font-weight: 600;
+  margin-bottom: 1.4rem;
+  color: var(--c-10);
 }
 
 .window__content {
   position: relative;
-  padding: 0 1rem;
+  padding: 0 2rem;
   height: 100%;
   max-height: 100%;
   overflow-y: scroll;
@@ -267,33 +329,46 @@ button {
   display: block;
 }
 
-.screen-score-container {
-  position: fixed;
-  top: 3rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.screen-score {
+.window__navigation {
   display: flex;
-  font-size: 2rem;
-  font-weight: 500;
   align-items: center;
-  justify-content: center;
-  width: fit-content;
+  width: calc(100% - 4rem);
+  margin: 0 auto 1rem;
+  height: 2.5rem;
+  background: var(--c-2);
+  border: 1px solid var(--c-3);
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  margin: 0 auto;
-  background: #ffffff33;
-  padding: .6rem 2.2rem;
 }
-.screen-score .coin-icon {
-  margin-right: .7rem;
+.window__navigation-item {
+  flex: 1;
+  padding: 0 .8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: .85rem;
+  font-weight: 500;
+  height: 100%;
+  border-radius: 6px;
 }
-.screen-score-title {
-  font-size: .8rem;
-  text-align: center;
-  margin-bottom: .6rem;
+.window__navigation-item.active {
+  background: var(--c-3);
 }
+.window__navigation-item svg {
+  font-size: 1rem;
+  margin-right: .4rem;
+  fill: var(--c-10);
+}
+.window-slider {
+  height: calc(100% - 3.5rem);
+}
+.window__slider-item {
+  display: none;
+}
+.window__slider-item.active {
+  display: block;
+}
+
+
 
 .screen-title {
   display: flex;
@@ -303,7 +378,7 @@ button {
   font-weight: 600;
   text-transform: uppercase;
   margin-bottom: 1.2rem;
-  color:#ddad35;
+  color: var(--c-10);
 }
 .screen-title .d-arrow {
   font-size: 1.8rem;
@@ -501,7 +576,7 @@ button {
   justify-content: center;
 }
 .energy-icon {
-  background: #ddad35;
+  background: var(--c-10);
 }
 
 .energy-bar {
@@ -521,19 +596,14 @@ button {
 
 
 
-
-
-
-
-.boost {
+.item {
+  position: relative;
+  width: 100%;
+  display: flex;
   padding: .65rem .8rem;
   margin-bottom: .8rem;
-  width: 100%;
 }
-.boost-screen .window__content {
-  padding: 0 2rem;
-}
-.boost__icon {
+.item__logo {
   width: 3.8rem;
   min-width: 3.8rem;
   padding: .5rem .6rem;
@@ -544,20 +614,122 @@ button {
   justify-content: center;
   margin-right: 1rem;
 }
-.boost__icon img {
+.item__logo img {
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
-.boost__text {
+.item__text {
   font-weight: 300;
   width: 100%;
 }
-.boost__title {
-  font-size: .75rem;
+.item__title {
+  font-size: .8rem;
+  font-weight: normal;
   text-align: start;
   display: flex;
   align-items: center;
   padding-right: 1rem;
+}
+.item__reward {
+  font-size: .72rem;
+  font-weight: 500;
+  margin-top: 0.2rem;
+}
+.item__reward .coin-icon {
+  margin: 0 .1rem 0 .2rem;
+}
+.item__progress-bar-container {
+  width: calc(100% - 2rem);
+  height: 6px;
+  background: var(--c-2);
+  border-radius: 3px;
+  margin-top: .5rem;
+  border: 1px solid var(--c-3);
+}
+.item__progress-bar {
+  height: 100%;
+  background: var(--c-10);
+  border-radius: 3px;
+}
+.item__button {
+  width: max-content;
+  min-width: 5.4rem;
+  margin-left: auto;
+  margin-right: 0.6rem;
+}
+.item__button button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .6rem;
+  font-weight: 300;
+  letter-spacing: 0.05rem;
+  padding: .65rem .8rem;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #fff inset;
+  outline: none;
+  color: #fff;
+  opacity: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.boost {
+  position: relative;
+  padding: .65rem .8rem;
+  margin-bottom: .8rem;
+  width: 100%;
+}
+.daily-boosts {
+  display: flex;
+  align-items: stretch;
+  gap: .8rem;
+  max-width: 100%;
+}
+.daily-boosts .boost {
+  padding: .8rem .6rem;
+  max-width: calc(50% - .4rem);
+}
+.daily-boosts .item__logo {
+  width: 2.5rem;
+  min-width: 2.5rem;
+  padding: .3rem .4rem;
+  margin-right: .7rem;
+}
+.daily-boosts .arrow {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+}
+.daily-boosts .boost__title {
+  white-space: nowrap;
+}
+.update-boost-daily {
+  font-weight: 700;
+  background: var(--c-10);
+  background-clip: text;
+  color: transparent;
+}
+.boost__list {
+  margin-bottom: 1rem;
+}
+.boost__description {
+  font-size: .6rem;
 }
 .boost__info {
   display: flex;
@@ -573,35 +745,10 @@ button {
   margin-right: .3rem;
 }
 .boost__level {
-  color: #dcdcdc;
+  color: var(--c-10);
 }
 
-.boost__button {
-  min-width: 5.4rem;
-  margin-left: auto;
-  margin-right: 0.6rem;
-}
-.boost__button button {
-  display: flex;
-  align-items: center;
-  font-size: .6rem;
-  font-weight: 300;
-  letter-spacing: 0.05rem;
-  padding: .65rem .8rem;
-  width: 100%;
-  border-radius: 8px;
-  border: 1px solid #fff inset;
-  outline: none;
-  color: #fff;
-  opacity: 1;
-}
-.boost-arrow {
-  font-size: 1.6rem;
-  font-weight: 200;
-  line-height: 0.1;
-  display: inline-block;
-  transform: translate(10%, -46%);
-}
+
 .boost__max {
   margin: 0 auto;
 }
@@ -710,4 +857,71 @@ button {
 .update-boost-button .coin-icon {
   margin-right: .3rem;
   transform: translateY(-6%);
+}
+
+
+
+
+
+
+
+
+
+
+.ref .window__content {
+  padding-top: 1.6rem;
+}
+
+.ref__block {
+  display: flex;
+  padding: 1.4rem 1.3rem;
+  justify-content: space-between;
+}
+.ref__block-title {
+  font-size: .9rem;
+}
+.ref__block-link {
+  font-size: .7rem;
+  opacity: .6;
+  margin-top: .6rem;
+}
+.ref__block-button {
+  margin-top: .6rem;
+  padding: .8rem 1rem;
+}
+.ref__block-image {
+  width: 6rem;
+  height: 6rem;
+}
+.ref__block-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ref__p {
+  margin-top: 1.2rem;
+  font-size: .7rem;
+  line-height: 1.1rem;
+  padding-left: 1.4rem;
+}
+.ref__p span, .ref__stats h3 span {
+  color: var(--c-10);
+}
+.ref__stats {
+  margin: 1.4rem 0;
+  display: flex;
+  padding-left: 1.4rem;
+}
+.ref__stat {
+  margin-right: 2rem;
+}
+.ref__stat h3 {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.ref__stat-number {
+  margin-top: .5rem;
+  font-size: 2rem;
 }

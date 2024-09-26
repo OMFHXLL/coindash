@@ -18,13 +18,22 @@ const initialState = {
   lastTimeOnline: null,
   boosts: [],
   isAccountActive: false,
-  hideNav: false
+  hideNav: false,
+  infinityEnergy: false,
+  extraTap: {
+    active: false,
+    timeLeft: 0,
+    multiplier: 1,
+  },
+  page: 'TAP'
 };
 
 const boosts = {
   power_compose: 1,
   energy_limit: 1,
-  energy_boost: 1
+  energy_boost: 1,
+  extra_tap: {},
+  energy_reset: {}
 };
 
 async function fetchUserData() {
@@ -49,7 +58,7 @@ async function fetchUserData() {
       level: data[0].level,
       boosts: data[0].boosts,
       lastTimeOnline: data[0].last_time_online,
-      isAccountActive: true
+      isAccountActive: true,
     };
   }
   const { data: newUser, error: insertError } = await DB
@@ -76,7 +85,7 @@ async function fetchUserData() {
       maxEnergy: 500,
       lastTimeOnline: null,
       boosts: boosts,
-      isAccountActive: true
+      isAccountActive: true,
     }
   )
 }
@@ -96,6 +105,9 @@ const actions = {
   SET_LAST_TIME_ONLINE: 'SET_LAST_TIME_ONLINE',
   SET_IS_ACCOUNT_ACTIVE: 'SET_IS_ACCOUNT_ACTIVE',
   SET_HIDE_NAV: 'SET_HIDE_NAV',
+  SET_INFINITY_ENERGY: 'SET_INFINITY_ENERGY',
+  SET_EXTRA_TAP: 'SET_EXTRA_TAP',
+  SET_PAGE: 'SET_PAGE',
   SET_INITIAL_STATE: 'SET_INITIAL_STATE',
 };
 
@@ -108,7 +120,7 @@ const reducer = (state, action) => {
       return { ...state, clicks: action.payload };
     case actions.SET_SCORE:
       return { ...state, score: action.payload };
-      case actions.SET_TOTAL_SCORE:
+    case actions.SET_TOTAL_SCORE:
       return { ...state, totalScore: action.payload };
     case actions.SET_LEVEL:
       return { ...state, level: action.payload };
@@ -128,6 +140,12 @@ const reducer = (state, action) => {
       return { ...state, isAccountActive: action.payload };
     case actions.SET_HIDE_NAV:
       return { ...state, hideNav: action.payload };
+    case actions.SET_INFINITY_ENERGY:
+      return { ...state, infinityEnergy: action.payload };
+    case actions.SET_EXTRA_TAP:
+      return { ...state, extraTap: action.payload };
+    case actions.SET_PAGE:
+      return { ...state, page: action.payload };
     case actions.SET_INITIAL_STATE:
       return { ...state, ...action.payload };
     default:

@@ -12,7 +12,7 @@ function Score ({ image }) {
     <div className="score">
       <div className='score__content'>
         <div className="score__icon">
-          <div className='coin-image'></div>
+          <div className='coin-icon'></div>
         </div>
         <div className="score__conversion">{(score * 0.002).toFixed(3)}</div>
         {formatScore(score)}
