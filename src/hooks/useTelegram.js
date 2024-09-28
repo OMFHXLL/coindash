@@ -1,5 +1,5 @@
 let tg;
-const isTg = false;
+const isTg = true;
 
 let tgUser = {}
 
