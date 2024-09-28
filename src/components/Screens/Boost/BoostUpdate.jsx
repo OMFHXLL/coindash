@@ -22,7 +22,7 @@ const BoostUpdate = ({ type, title, description, prices, power = 0, icon, close 
   const dailyBoost = boosts[type] || { date: null, count: 2 };
   const { date: lastPurchaseTimestamp, count: purchaseCount } = dailyBoost;
   const level = boosts[type] !== undefined ? boosts[type] : 0;
-  const price = prices !== undefined ? prices[level] : 0; // Изменили на level вместо level-1
+  const price = prices !== undefined ? prices[level - 1 ] : 0; // Изменили на level вместо level-1
 
   useEffect(() => {
     const checkAndUpdateDailyBoosts = async () => {
