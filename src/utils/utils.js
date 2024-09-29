@@ -29,4 +29,22 @@ function formatScore(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
-export { formatTime, formatScore }
+
+
+// IMPORT RANK ICONS
+function importRankIcons(r) {
+  let icons = {};
+  r.keys().forEach((item) => {
+    icons[item.replace('./', '')] = r(item);
+  });
+  return icons;
+}
+
+const rankIcons = importRankIcons(require.context('../assets/image/ranks', false, /\.png$/));
+console.log(rankIcons[Object.keys(rankIcons)[1]])
+
+
+
+
+
+export { formatTime, formatScore, rankIcons }

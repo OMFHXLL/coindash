@@ -5,7 +5,7 @@ let tgUser = {}
 
 if (!isTg) {
   tgUser = {
-    id: 0,
+    id: 1,
     username: 'guest',
     first_name: '',
     last_name: '',

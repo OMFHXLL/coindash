@@ -43,13 +43,14 @@ const Coin = () => {
       multiplierAnimation.remove();
     });
 
+    const newLevel = level;
     const newScore = score + multiplier;
     const newTotalScore = totalScore + multiplier;
     const newClicksScore = clicks + 1;
     const newEnergyScore = infinityEnergy ? energy : energy - multiplier;
 
     if (ranks[level - 1] < totalScore) {
-      const newLevel = Math.floor(totalScore / ranks[level - 1]) + 1;
+      newLevel = level + 1;
       dispatch({ type: actions.SET_LEVEL, payload: newLevel });
     }
 
@@ -60,7 +61,7 @@ const Coin = () => {
     
     await DB
       .from('users')
-      .update({ score: newScore, total_score: newTotalScore, clicks: newClicksScore, energy: newEnergyScore })
+      .update({ score: newScore, total_score: newTotalScore, clicks: newClicksScore, energy: newEnergyScore, level: newLevel })
       .eq('tg_id', tgId);
   };
 

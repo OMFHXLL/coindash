@@ -16,7 +16,9 @@ const initialState = {
   energyMultiplier: 1,
   maxEnergy: 500,
   lastTimeOnline: null,
-  boosts: [],
+  boosts: {},
+  tasks: {},
+  referrals: {joined: 0, reward: 0},
   isAccountActive: false,
   hideNav: false,
   infinityEnergy: false,
@@ -35,6 +37,15 @@ const boosts = {
   extra_tap: {},
   energy_reset: {}
 };
+const tasks = {
+  special: [],
+  league: [],
+  referal: [],
+};
+const referrals = {
+  joined: 0,
+  reward: 0
+}
 
 async function fetchUserData() {
   const { data, error } = await DB
@@ -57,6 +68,8 @@ async function fetchUserData() {
       maxEnergy: data[0].max_energy,
       level: data[0].level,
       boosts: data[0].boosts,
+      tasks: data[0].tasks,
+      referrals: data[0].referrals,
       lastTimeOnline: data[0].last_time_online,
       isAccountActive: true,
     };
@@ -64,7 +77,7 @@ async function fetchUserData() {
   const { data: newUser, error: insertError } = await DB
     .from('users')
     .insert(
-      { tg_id: userId, lang: tgUser.language, username: tgUser.username, boosts: boosts }
+      { tg_id: userId, lang: tgUser.language, username: tgUser.username, boosts: boosts, tasks: tasks, referrals: referrals }
     )
     .single();
 
@@ -85,6 +98,8 @@ async function fetchUserData() {
       maxEnergy: 500,
       lastTimeOnline: null,
       boosts: boosts,
+      tasks: tasks,
+      referrals: referrals,
       isAccountActive: true,
     }
   )
@@ -102,6 +117,8 @@ const actions = {
   SET_ENERGY_MULTIPLIER: 'SET_ENERGY_MULTIPLIER',
   SET_MAX_ENERGY: 'SET_MAX_ENERGY',
   SET_BOOSTS: 'SET_BOOSTS',
+  SET_TASKS: 'SET_TASKS',
+  SET_REFERRALS: 'SET_REFERRALS',
   SET_LAST_TIME_ONLINE: 'SET_LAST_TIME_ONLINE',
   SET_IS_ACCOUNT_ACTIVE: 'SET_IS_ACCOUNT_ACTIVE',
   SET_HIDE_NAV: 'SET_HIDE_NAV',
@@ -134,6 +151,10 @@ const reducer = (state, action) => {
       return { ...state, maxEnergy: action.payload };
     case actions.SET_BOOSTS:
       return { ...state, boosts: action.payload };
+    case actions.SET_TASKS:
+      return { ...state, tasks: action.payload };
+    case actions.SET_REFERRALS:
+      return { ...state, referrals: action.payload };
     case actions.SET_LAST_TIME_ONLINE:
       return { ...state, lastTimeOnline: action.payload };
     case actions.SET_IS_ACCOUNT_ACTIVE:
