@@ -10,7 +10,7 @@ function TaskItem({ type, id, title, icon, reward, required }) {
   const [ status, setStatus ] = useState(0);
 
   useEffect(() => {
-    if (type in tasks && tasks[type].includes(id)) {
+    if (tasks[type].includes(id)) {
       setStatus(2);
     }
   }, [tasks])
