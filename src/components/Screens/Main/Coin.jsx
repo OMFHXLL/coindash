@@ -43,7 +43,7 @@ const Coin = () => {
       multiplierAnimation.remove();
     });
 
-    const newLevel = level;
+    let newLevel = level;
     const newScore = score + multiplier;
     const newTotalScore = totalScore + multiplier;
     const newClicksScore = clicks + 1;
