@@ -33,7 +33,10 @@ function TaskItem({ type, id, title, icon, reward, required }) {
 
       if (type === 'referral') {
         dispatch({ type: actions.SET_REFERRALS, payload: {...referrals, ['reward']: referrals.reward + reward} })
-        console.log(referrals)
+        await DB
+          .from('users')
+          .update({ referrals: {...referrals, ['reward']: referrals.reward + reward} })
+          .eq('tg_id', tgId);
       }
     }
   };
@@ -48,7 +51,7 @@ function TaskItem({ type, id, title, icon, reward, required }) {
           <div className="item__reward">Награда: <div className="coin-icon"></div> {formatScore(reward)}</div>
         </div>
         <div className="item__button">
-          <button className="a-btn" disabled={status === 2}>Перейти<div className="arrow">&raquo;</div></button>
+          <button className="a-btn" disabled={status === 2}>Перейти</button>
         </div>
       </div>)
     case 'league': 
@@ -67,7 +70,7 @@ function TaskItem({ type, id, title, icon, reward, required }) {
           <button className={status === 2 ? 'a-btn done' : 'a-btn'} 
                   disabled={totalScore <= required || status === 2}
                   onClick={handleClaimReward}
-                  >{status === 2 ? 'Получено' : <>Забрать<div className="arrow">&raquo;</div></>}</button>
+                  >{status === 2 ? 'Получено' : <>Забрать</>}</button>
         </div>
       </div>)
     case 'referral':
@@ -86,7 +89,7 @@ function TaskItem({ type, id, title, icon, reward, required }) {
           <button className="a-btn" 
                   disabled={referrals.joined < required || status === 2}
                   onClick={handleClaimReward}
-                  >{status === 2 ? 'Получено' : <>Забрать<div className="arrow">&raquo;</div></>}</button>
+                  >{status === 2 ? 'Получено' : <>Забрать</>}</button>
         </div>
       </div>)
   }

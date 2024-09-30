@@ -150,7 +150,7 @@ const BoostUpdate = ({ type, title, description, prices, power = 0, icon, close 
         >
           {BoostTypes.prog.includes(type) ? (
             prices[level - 1] === undefined ? "Максимальный уровень" : "Улучшить"
-          ) : "Активировать"}
+          ) : (type === 'energy_reset' && energy >= maxEnergy ? 'Максимальная энергия' : "Активировать")}
         </button>
       </div>
     </div>

@@ -16,10 +16,10 @@ const Navigation = ({ activeWindow, onNavClick }) => {
   }
 
   return (
-    <nav className={isNavHidden ? "nav hidden" : "nav"}>
-      <Button activeWindow={activeWindow} onClickButton={onNavClick} showMainButton={setMain} link={'TAP'} hidden={!isMainVisible}/>
+    <nav className={isNavHidden ? (!isMainVisible ? "nav main hidden" : 'nav hidden') : (!isMainVisible ? "nav main" : "nav")}>
       <Button activeWindow={activeWindow} onClickButton={onNavClick} showMainButton={setMain} link={'REF'} />
       <Button activeWindow={activeWindow} onClickButton={onNavClick} showMainButton={setMain} link={'TASK'} />
+      <Button activeWindow={activeWindow} onClickButton={onNavClick} showMainButton={setMain} link={'TAP'} hidden={!isMainVisible}/>
       <Button activeWindow={activeWindow} onClickButton={onNavClick} showMainButton={setMain} link={'BOOST'} />
       {/* <Button onClickButton={onNavClick} showMainButton={setMain} link={'STATS'} /> */}
     </nav>

@@ -7,18 +7,18 @@ import LevelIcon from '../assets/image/ranks/1.png';
 import ConversionIcon from '../assets/image/conversion-icon.png';
 import WalletIcon from '../assets/image/wallet-icon.png';
 
-function WindowHeader() {
+function WindowHeader({main}) {
   const { state } = useContext(GameContext);
   const { score } = state;
 
   return(
-    <div className="window__header">
-      <div className="window__header-item">
+    <div className={main ? "window__header main" : "window__header"}>
+      {!main && <div className="window__header-item">
         <img src={CoinIcon} className="window__header-item-icon"/>
         <span>{formatScore(score)}</span>
-      </div>
+      </div>}
       <div className="window__header-item">
-        <img src={LevelIcon} className="window__header-item-icon"/>
+        <img src={LevelIcon} className="window__header-item-icon league"/>
         Лига
       </div>
       <div className="window__header-item">

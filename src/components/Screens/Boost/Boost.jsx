@@ -82,7 +82,7 @@ function Boost({ type, title, description, prices = [], power, icon }) {
         </div>
       </div>
       <div className="item__button">
-        <button className='a-btn' onClick={openBoosUpdate} disabled={!prices[level - 1]}>{prices[level - 1] ? <>Улучшить<span className="arrow">&raquo;</span></> : <div className="boost__max">МАКС</div>}</button>
+        <button className='a-btn' onClick={openBoosUpdate} disabled={!prices[level - 1]}>{prices[level - 1] ? <>Улучшить{/*<span className="arrow">&raquo;</span>*/}</> : <div className="boost__max">МАКС</div>}</button>
       </div>
       {showBoostUpdate && <BoostUpdate type={type} title={title} description={description} prices={prices} power={power} icon={icon} close={closeBoosUpdate}/>}
     </div>

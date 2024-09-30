@@ -14,7 +14,7 @@ function Score ({ image }) {
         <div className="score__icon">
           <div className='coin-icon'></div>
         </div>
-        <div className="score__conversion">{(score * 0.002).toFixed(3)}</div>
+        <div className="score__conversion">&#36; {(score * 0.002).toFixed(3)}</div>
         {formatScore(score)}
       </div>
       <Rank/>

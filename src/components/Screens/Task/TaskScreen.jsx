@@ -28,13 +28,15 @@ const Special = [
 ]
 
 const League = [
-  { rank: 1, title: 'Новичок', reward: 5000, required: 5000 },
-  { rank: 2, title: 'Ученик', reward: 5000, required: 10000 },
-  { rank: 3, title: 'Мастер монет', reward: 5000, required: 25000 },
-  { rank: 4, title: 'Эксперт тапов', reward: 5000, required: 50000 },
-  { rank: 5, title: 'Виртуоз', reward: 5000, required: 100000 },
-  { rank: 6, title: 'Легенда', reward: 5000, required: 200000 },
-  { rank: 7, title: 'Грандмастер', reward: 5000, required: 300000 },
+  { rank: 1, title: 'Новичок', reward: 1000, required: 5000 },
+  { rank: 2, title: 'Молодая монета', reward: 5000, required: 50000 },
+  { rank: 3, title: 'Перспективная монета', reward: 25000, required: 250000 },
+  { rank: 4, title: 'Средняя капитализация', reward: 50000, required: 500000 },
+  { rank: 5, title: 'Высокая капитализация', reward: 100000, required: 1000000 },
+  { rank: 6, title: 'Топ монета', reward: 250000, required: 2500000 },
+  { rank: 7, title: 'Премиум монета', reward: 500000, required: 5000000 },
+  { rank: 8, title: 'Мировой лидер', reward: 1000000, required: 10000000 },
+  { rank: 9, title: 'Крипто гегемон', reward: 5000000, required: 50000000 },
 ]
 
 const Referral = [

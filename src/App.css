@@ -7,7 +7,9 @@
   --c-1: #0c1210;
   --c-2: #091e16;
   --c-3: #224d3d;
-  --c-4: #00985ee9;
+  --c-4: #145c42;
+  --c-5: #00985ee9;
+  --c-9: #b40000;
   --c-10: #ddad35;
   --c-11: #9e7817;
   --o-1: rgba(255, 255, 255, 0.11);
@@ -153,10 +155,10 @@ button {
   filter: brightness(80%);
 }
 .a-btn:active:not(:disabled) {
-  background: var(--c-4);
+  background: var(--c-5);
 }
 .a-btn.done {
-  background: var(--c-4);
+  background: var(--c-5);
   filter: brightness(60%);
 }
 
@@ -236,13 +238,11 @@ button {
   float: right;
   font-weight: 200;
   line-height: 0.1;
-  display: inline-block;
-  transform: translate(10%, -46%);
+  transform: translate(10%, -50%);
 }
 
 
 .window {
-  padding: 4.5rem 0 0;
   position: fixed;
   width: 100%;
   height: calc(100% - 6.4rem);
@@ -252,6 +252,9 @@ button {
   pointer-events: none;
   overflow: hidden;
 }
+.window:not(.main) {
+  padding: 3.5rem 0 0;
+}
 .window.active {
   opacity: 1;
   pointer-events: auto;
@@ -259,13 +262,13 @@ button {
 
 .window__header {
   position: absolute;
-  top: 4.5rem;
+  top: 3.5rem;
   left: 50%;
   transform: translate(-50%, -100%);
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  width: calc(100vw - 4rem);
+  width: calc(100vw - 2rem);
   height: 2.3rem;
   max-height: 2.3rem;
   padding: .3rem;
@@ -273,6 +276,13 @@ button {
   border-radius: 6px;
   border: 1px solid var(--c-3);
   overflow: hidden;
+}
+.window__header.main {
+  width: calc(100vw - 5rem);
+  top: 4.5rem;
+}
+.window__header.main .window__header-item button {
+  font-size: .75rem;
 }
 .window__header-item {
   position: relative;
@@ -283,7 +293,8 @@ button {
   overflow: hidden;
   width: 100%;
   height: 100%;
-  font-size: .66rem;
+  font-size: .7rem;
+  font-weight: 600;
 }
 .window__header-item span {
   max-width: 70%;
@@ -294,6 +305,9 @@ button {
   height: 1.2rem;
   margin-right: .2rem;
 }
+.window__header-item-icon.league {
+  transform: scale(1.4);
+}
 .window__header-item button {
   padding: .3rem;
   width: 100%;
@@ -301,12 +315,13 @@ button {
   overflow: hidden;
   border-radius: 6px;
   font-size: .65rem;
-  opacity: .8;
+  justify-content: space-around;
+  opacity: .9;
+  background: var(--c-9);
 }
 .window__header-item button img {
   width: 1rem;
   height: 1rem;
-  margin: 0 .2rem 0 .1rem;
 }
 .window__header-item:not(:first-child, :last-child)::before {
   content: '';
@@ -328,7 +343,7 @@ button {
 
 .window__content {
   position: relative;
-  padding: 2rem 2rem 0;
+  padding: 2rem 1rem 0;
   height: 100%;
   max-height: 100%;
   overflow-y: scroll;
@@ -348,8 +363,8 @@ button {
 .window__navigation {
   display: flex;
   align-items: center;
-  width: calc(100% - 4rem);
-  margin: 1.4rem auto .2rem;
+  width: calc(100% - 2rem);
+  margin: 1rem auto .5rem;
   height: 2.5rem;
   background: var(--c-2);
   border: 1px solid var(--c-3);
@@ -361,7 +376,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: .65rem;
+  font-size: .75rem;
   font-weight: 500;
   border-radius: 6px;
 }
@@ -385,6 +400,9 @@ button {
 }
 .window__slider-item.active {
   display: block;
+}
+.window__slider-item[data-slider='league'] .item__logo img {
+  transform: scale(1.4);
 }
 
 
@@ -421,6 +439,10 @@ button {
 }
 .nav.hidden {
   display: none;
+}
+.nav.main {
+  padding: 0 2.5rem;
+  gap: calc(1.2 * var(--index));
 }
 .nav-button {
   position: relative;
@@ -487,10 +509,11 @@ button {
 
 .coin {
   position: fixed;
-  top: 45%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 35dvh;
+  max-width: 80%;
   aspect-ratio: 1/1;
   border-radius: 100%;
 }
@@ -531,7 +554,7 @@ button {
   position: absolute;
   transition: transform 1s, opacity 1s ease-out;
   color: #fff;
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 600;
   pointer-events: none;
   transform: translate(-50%, -50%) scale(.8);
@@ -540,7 +563,7 @@ button {
 
 .score {
   position: fixed;
-  top: 4rem;
+  top: 7.5rem;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -555,11 +578,14 @@ button {
 }
 .score__conversion {
   position: absolute;
-  font-size: .65rem;
-  font-weight: 300;
+  font-size: .55rem;
+  font-weight: 400;
   right: 0;
   top: 0;
-  transform: translate(100%, -50%);
+  transform: translate(50%, -100%);
+  background: var(--c-4);
+  padding: .2rem .4rem;
+  border-radius: 8px 8px 8px 0;
 }
 
 .score__icon {
@@ -641,13 +667,14 @@ button {
   height: 100%;
   object-fit: contain;
 }
+
 .item__text {
   font-weight: 300;
   width: 100%;
 }
 .item__title {
-  font-size: .65rem;
-  font-weight: normal;
+  font-size: .7rem;
+  font-weight: 600;
   text-align: start;
   display: flex;
   align-items: center;
@@ -662,10 +689,10 @@ button {
   margin: 0 .1rem 0 .2rem;
 }
 .item__progress-bar-container {
-  width: calc(100% - 2rem);
-  height: 6px;
+  width: calc(100% - 1.4rem);
+  height: .4rem;
   background: var(--c-2);
-  border-radius: 3px;
+  border-radius: .2rem;
   margin-top: .5rem;
   border: 1px solid var(--c-3);
 }
@@ -678,14 +705,14 @@ button {
   width: max-content;
   min-width: 5.4rem;
   margin-left: auto;
-  margin-right: 0.6rem;
+  margin-right: 0.2rem;
 }
 .item__button button {
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: .6rem;
-  font-weight: 300;
+  font-weight: 600;
   letter-spacing: 0.05rem;
   padding: .65rem .8rem;
   width: 100%;
@@ -708,7 +735,9 @@ button {
 
 
 
-
+.boost-screen .window__content:not(:has(.update-boost-container)) {
+  mask-image: linear-gradient(0deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
 .boost {
   position: relative;
   padding: .65rem .8rem;
@@ -735,7 +764,7 @@ button {
   position: absolute;
   top: 50%;
   right: 0.5rem;
-  transform: translateY(-50%);
+  transform: translateY(-75%);
 }
 .daily-boosts .boost__title {
   white-space: nowrap;
@@ -890,7 +919,7 @@ button {
 
 
 .ref .window__content {
-  padding-top: 1.6rem;
+  padding: 1.6rem 1.8rem;
 }
 
 .ref__block {
