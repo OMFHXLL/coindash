@@ -14,24 +14,32 @@ const Coin = () => {
   const extraTapTimerRef = useRef(null);
   const originalMultiplierRef = useRef(multiplier); // Сохраняем исходный множитель
 
-  const handleCoinClick = async (e) => {
-    e.preventDefault();
+  const handleCoinClick = (e) => {
+    const touches = e.touches;
+    for (let i = 0; i < touches.length; i++) {
+      const touch = touches[i];
+      const x = touch.clientX;
+      const y = touch.clientY;
+      initClick(touch, x, y);
+    }
+  }
 
+  const initClick = async (e, x, y) => {
     if (!isAccountActive) {
       return console.log('Аккаунт не активирован');
     }
 
     if (energy - multiplier < 0) {
       return console.log('Энергия закончилась');
-    }
+    }    
 
     const multiplierAnimation = document.createElement('div');
     multiplierAnimation.className = 'coin-multiplier noselect';
     multiplierAnimation.innerHTML = `<span class="coin-multiplier noselect">+${multiplier}</span>`;
     document.body.appendChild(multiplierAnimation);
     multiplierAnimation.style.position = 'absolute';
-    multiplierAnimation.style.left = `${e.pageX}px`;
-    multiplierAnimation.style.top = `${e.pageY}px`;
+    multiplierAnimation.style.left = `${x}px`;
+    multiplierAnimation.style.top = `${y}px`;
 
     requestAnimationFrame(() => {
       multiplierAnimation.style.transition = 'transform 1s, opacity 1s';
@@ -100,7 +108,7 @@ const Coin = () => {
 
   return (
     <div>
-      <div className="coin" onClick={handleCoinClick}>
+      <div className="coin" onTouchStart={handleCoinClick}>
         <div className="coin-image"></div>
       </div>
     </div>

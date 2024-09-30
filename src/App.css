@@ -977,3 +977,20 @@ button {
   margin-top: .5rem;
   font-size: 2rem;
 }
+
+
+
+
+
+
+.wallet {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100vw - 5rem);
+  padding: 2.5rem 2rem;
+  background: var(--c-2);
+}
