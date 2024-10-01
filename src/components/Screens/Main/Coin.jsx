@@ -4,7 +4,14 @@ import { GameContext, actions } from '../../../context/GameContext';
 import { RiCopperCoinFill } from "react-icons/ri";
 
 const ranks = [
-  5000, 10000, 20000, 50000, 100000, 200000, 300000
+  50000,
+  250000,
+  500000,
+  1000000,
+  2500000,
+  5000000,
+  10000000,
+  50000000
 ]
 
 const Coin = () => {

@@ -585,6 +585,7 @@ button {
   white-space: nowrap;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding-right: .4rem;
 }
 .score__conversion {
