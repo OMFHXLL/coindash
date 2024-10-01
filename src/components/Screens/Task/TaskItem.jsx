@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DB } from "../../../db";
-import { formatScore } from "../../../utils/utils";
+import { formatScore, checkUserSubscription } from "../../../utils/utils";
 import { GameContext, actions } from "../../../context/GameContext";
 
-function TaskItem({ type, id, title, icon, reward, required }) {
+function TaskItem({ type, id, title, icon, reward, required, channel }) {
   const { state, dispatch } = useContext(GameContext);
   const { tgId, tasks, score, totalScore, level, referrals } = state;
   
@@ -44,6 +44,10 @@ function TaskItem({ type, id, title, icon, reward, required }) {
   let barStyle = {};
   switch (type) {
     case 'special':
+      // checkUserSubscription(tgId, channel, (isSubscribed) => {
+      //   console.log(isSubscribed);
+      // });
+
       return(<div className="item b-btn">
         <div className="item__logo"><img src={icon}/></div>
         <div className="item__text">
@@ -86,7 +90,7 @@ function TaskItem({ type, id, title, icon, reward, required }) {
           <div className="item__progress-bar-container"><div className="item__progress-bar" style={barStyle}></div></div>
         </div>
         <div className="item__button">
-          <button className="a-btn" 
+          <button className={status === 2 ? 'a-btn done' : 'a-btn'}
                   disabled={referrals.joined < required || status === 2}
                   onClick={handleClaimReward}
                   >{status === 2 ? 'Получено' : <>Забрать</>}</button>

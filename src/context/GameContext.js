@@ -21,6 +21,7 @@ const initialState = {
   referrals: {joined: 0, reward: 0},
   isAccountActive: false,
   hideNav: false,
+  showWallet: false,
   infinityEnergy: false,
   extraTap: {
     active: false,
@@ -122,6 +123,7 @@ const actions = {
   SET_LAST_TIME_ONLINE: 'SET_LAST_TIME_ONLINE',
   SET_IS_ACCOUNT_ACTIVE: 'SET_IS_ACCOUNT_ACTIVE',
   SET_HIDE_NAV: 'SET_HIDE_NAV',
+  SET_SHOW_WALLET: 'SET_SHOW_WALLET',
   SET_INFINITY_ENERGY: 'SET_INFINITY_ENERGY',
   SET_EXTRA_TAP: 'SET_EXTRA_TAP',
   SET_PAGE: 'SET_PAGE',
@@ -161,6 +163,8 @@ const reducer = (state, action) => {
       return { ...state, isAccountActive: action.payload };
     case actions.SET_HIDE_NAV:
       return { ...state, hideNav: action.payload };
+    case actions.SET_SHOW_WALLET:
+      return { ...state, showWallet: action.payload };
     case actions.SET_INFINITY_ENERGY:
       return { ...state, infinityEnergy: action.payload };
     case actions.SET_EXTRA_TAP:

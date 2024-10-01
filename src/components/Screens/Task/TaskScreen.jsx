@@ -19,12 +19,12 @@ const windows = [
 ];
 
 const Special = [
-  { id: 1, title: 'Подписаться на канал', reward: 55000 },
-  { id: 2, title: 'Подписаться на канал', reward: 55000 },
-  { id: 3, title: 'Подписаться на канал', reward: 55000 },
-  { id: 4, title: 'Подписаться на канал', reward: 55000 },
-  { id: 5, title: 'Подписаться на канал', reward: 55000 },
-  { id: 6, title: 'Подписаться на канал', reward: 55000 },
+  { id: 1, title: 'Подписаться на канал', reward: 55000, channel: '@testchatcoindash' },
+  { id: 2, title: 'Подписаться на канал', reward: 55000, channel: '@testchatcoindash' },
+  { id: 3, title: 'Подписаться на канал', reward: 55000, channel: '@testchatcoindash' },
+  { id: 4, title: 'Подписаться на канал', reward: 55000, channel: '@testchatcoindash' },
+  { id: 5, title: 'Подписаться на канал', reward: 55000, channel: '@testchatcoindash' },
+  { id: 6, title: 'Подписаться на канал', reward: 55000, channel: '@testchatcoindash' },
 ]
 
 const League = [
@@ -69,7 +69,8 @@ const TaskScreen = ({isActive}) => {
                         id={task.id}
                         type='special'
                         title={task.title} 
-                        icon={SpecialIcon} 
+                        icon={SpecialIcon}
+                        channel={task.channel}
                         reward={task.reward}/>
           ))}
         </div>

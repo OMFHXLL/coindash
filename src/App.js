@@ -9,6 +9,7 @@ import TaskScreen from './components/Screens/Task/TaskScreen';
 import BoostScreen from './components/Screens/Boost/BoostScreen';
 import StatsScreen from './components/Screens/Stats/StatsScreen';
 import Navigation from './components/Navigation/Navigation';
+import Wallet from './components/Wallet';
 import { DB } from './db';
 
 
@@ -32,6 +33,7 @@ function App() {
         <BoostScreen isActive={activeWindow === 'BOOST'}/>
         {/* <StatsScreen isActive={activeWindow === 'STATS'}/> */}
         <Navigation activeWindow={activeWindow} onNavClick={handleNavigationClick}/>
+        <Wallet/>
       </div>
     </GameProvider>
   );

@@ -22,7 +22,7 @@ function Boost({ type, title, description, prices = [], power, icon }) {
   const { boosts, tgId, score } = state;
   const [showBoostUpdate, setShowBoostUpdate] = useState(false);
 
-  const openBoosUpdate = () => {
+  const openBoostUpdate = () => {
     const container = document.querySelector('.update-boost-container');
     if (!container) {
       setShowBoostUpdate(true);
@@ -39,7 +39,7 @@ function Boost({ type, title, description, prices = [], power, icon }) {
 
   if (BoostTypes.daily.includes(type)) {
     return(
-      <div className='boost item b-btn' id={type} onClick={openBoosUpdate}>
+      <div className='boost item b-btn' id={type} onClick={openBoostUpdate}>
         <div className="item__logo"><img src={icon} alt={`${type}-icon`} /></div>
         <div className='item__text'>
           <div className='item__title'>{title}</div>
@@ -82,7 +82,7 @@ function Boost({ type, title, description, prices = [], power, icon }) {
         </div>
       </div>
       <div className="item__button">
-        <button className='a-btn' onClick={openBoosUpdate} disabled={!prices[level - 1]}>{prices[level - 1] ? <>Улучшить{/*<span className="arrow">&raquo;</span>*/}</> : <div className="boost__max">МАКС</div>}</button>
+        <button className='a-btn' onClick={openBoostUpdate} disabled={!prices[level - 1]}>{prices[level - 1] ? <>Улучшить{/*<span className="arrow">&raquo;</span>*/}</> : <div className="boost__max">МАКС</div>}</button>
       </div>
       {showBoostUpdate && <BoostUpdate type={type} title={title} description={description} prices={prices} power={power} icon={icon} close={closeBoosUpdate}/>}
     </div>

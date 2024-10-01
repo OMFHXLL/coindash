@@ -1,15 +1,20 @@
 import { useContext } from 'react';
-import { GameContext } from '../context/GameContext';
-import { formatScore } from '../utils/utils';
+import { GameContext, actions } from '../context/GameContext';
+import { formatConversion, formatScore, rankIcons } from '../utils/utils';
 
 import CoinIcon from '../assets/image/coin-icon.png';
-import LevelIcon from '../assets/image/ranks/1.png';
 import ConversionIcon from '../assets/image/conversion-icon.png';
 import WalletIcon from '../assets/image/wallet-icon.png';
 
 function WindowHeader({main}) {
-  const { state } = useContext(GameContext);
-  const { score } = state;
+  const { state, dispatch } = useContext(GameContext);
+  const { score, level } = state;
+
+  const handleOpenWallet = () => {
+    dispatch({type: actions.SET_SHOW_WALLET, payload: true})
+  }
+
+  const rankIcon = rankIcons[Object.keys(rankIcons)[level - 1]]
 
   return(
     <div className={main ? "window__header main" : "window__header"}>
@@ -18,15 +23,15 @@ function WindowHeader({main}) {
         <span>{formatScore(score)}</span>
       </div>}
       <div className="window__header-item">
-        <img src={LevelIcon} className="window__header-item-icon league"/>
+        <img src={rankIcon} className="window__header-item-icon league"/>
         Лига
       </div>
       <div className="window__header-item">
         <img src={ConversionIcon} className="window__header-item-icon"/>
-        {formatScore(Math.round((score * 0.002) * 100) / 100)}
+        {formatConversion(score)}
       </div>
       <div className="window__header-item">
-        <button className='a-btn'>
+        <button className='a-btn' onClick={handleOpenWallet}>
           <img src={WalletIcon}/>
           Кошелёк
         </button>

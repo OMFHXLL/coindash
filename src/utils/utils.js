@@ -1,3 +1,5 @@
+
+
 function formatTime(seconds) {
   const hrs = Math.floor(seconds / 3600);
   const mins = Math.floor((seconds % 3600) / 60);
@@ -25,11 +27,18 @@ function formatTime(seconds) {
   return result;
 }
 
+
 function formatScore(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
+function formatConversion(num) {
+  // Умножаем num на 0.002 и округляем до двух знаков после запятой
+  const roundedNum = Math.round((num * 0.002) * 100) / 100;
 
+  // Преобразуем число в строку, заменяем точку на запятую и форматируем тысячные
+  return formatScore(roundedNum).replace('.', ',');
+}
 
 // IMPORT RANK ICONS
 function importRankIcons(r) {
@@ -41,10 +50,40 @@ function importRankIcons(r) {
 }
 
 const rankIcons = importRankIcons(require.context('../assets/image/ranks', false, /\.png$/));
-console.log(rankIcons[Object.keys(rankIcons)[1]])
+// console.log(rankIcons[Object.keys(rankIcons)[1]])
 
 
 
 
+// CHECK USER SUBSCRIPTION
+function checkUserSubscription(userId, chatId, callback) {
+  const token = '7003559801:AAFUCthigVJgzuipUyMsbRdb3ATE-c2hPys';
+  const url = `https://api.telegram.org/bot${token}/getChatMember?chat_id=${chatId}&user_id=${userId}`;
 
-export { formatTime, formatScore, rankIcons }
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      if (data.ok) {
+        const chatMember = data.result;
+        if (chatMember.status === 'member' || chatMember.status === 'administrator' || chatMember.status === 'creator') {
+          callback(true);
+        } else {
+          callback(false);
+        }
+      } else {
+        console.error(data.description);
+        callback(false);
+      }
+    })
+    .catch(error => {
+      console.error('Ошибка при запросе:', error);
+      callback(false);
+    });
+}
+// checkUserSubscription(1257045227, '@testchatcoindash', (isSubscribed) => {
+//   console.log(isSubscribed);
+// });
+
+
+
+export { formatTime, formatScore, formatConversion, rankIcons, checkUserSubscription }

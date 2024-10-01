@@ -218,14 +218,19 @@ button {
   -webkit-mask-position: center;
 }
 
-.coin-icon {
+.coin-icon, .conversion-icon {
   height: 1.1em;
   aspect-ratio: 1/1;
   display: inline-block;
-  background-image: url(./assets/image/coin-icon.png);
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+}
+.coin-icon {
+  background-image: url(./assets/image/coin-icon.png);
+}
+.conversion-icon {
+  background-image: url(./assets/image/conversion-icon.png);
 }
 
 .back-button {
@@ -269,6 +274,7 @@ button {
   align-items: stretch;
   justify-content: space-between;
   width: calc(100vw - 2rem);
+  max-width: 350px;
   height: 2.3rem;
   max-height: 2.3rem;
   padding: .3rem;
@@ -306,7 +312,7 @@ button {
   margin-right: .2rem;
 }
 .window__header-item-icon.league {
-  transform: scale(1.4);
+  transform: scale(1.6) translateY(-2%);
 }
 .window__header-item button {
   padding: .3rem;
@@ -433,9 +439,7 @@ button {
   left: 0;  
   bottom: 1.3rem;
   width: 100%;
-  display: flex;
   padding: 0 1rem;
-  gap: calc(1 * var(--index));
 }
 .nav.hidden {
   display: none;
@@ -443,6 +447,13 @@ button {
 .nav.main {
   padding: 0 2.5rem;
   gap: calc(1.2 * var(--index));
+}
+.nav-container {
+  max-width: 350px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  gap: calc(1 * var(--index));
 }
 .nav-button {
   position: relative;
@@ -509,7 +520,7 @@ button {
 
 .coin {
   position: fixed;
-  top: 50%;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 35dvh;
@@ -563,7 +574,7 @@ button {
 
 .score {
   position: fixed;
-  top: 7.5rem;
+  top: 7rem;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -635,7 +646,7 @@ button {
 .energy-bar-fill {
   height: 100%;
   background: #e3a729;
-  border: 2px solid #31483c;
+  border: 3px solid #31483c;
   border-radius: 6px;
 }
 
@@ -735,9 +746,9 @@ button {
 
 
 
-.boost-screen .window__content:not(:has(.update-boost-container)) {
+/* .boost-screen .window__content:not(:has(.update-boost-container)) {
   mask-image: linear-gradient(0deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
-}
+} */
 .boost {
   position: relative;
   padding: .65rem .8rem;
@@ -983,14 +994,117 @@ button {
 
 
 
-.wallet {
-  display: flex;
-  flex-direction: column;
+.wallet-container {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: calc(100vw - 5rem);
-  padding: 2.5rem 2rem;
+  background: #0c12105b;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wallet {
+  display: flex;
+  flex-direction: column;
+  width: calc(100vw - 2rem);
+  max-width: 360px;
+  padding: 2.5rem 2.3rem;
   background: var(--c-2);
+  border-radius: 1.5rem;
+}
+.wallet__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+.wallet__title h2 {
+  font-size: .8rem;
+  text-transform: uppercase;
+  color: var(--c-10);
+}
+.wallet__back {
+  display: flex;
+  align-items: center;
+  font-size: .65rem;
+}
+.wallet__back svg {
+  margin-left: .2rem;
+}
+.wallet__exchange {
+  display: flex;
+  align-items: center;
+  font-size: .65rem;
+  margin-bottom: .8rem;
+}
+.wallet__exchange span[class*="icon"] {
+  margin: 0 .2rem;
+}
+.wallet__card {
+  position: relative;
+  padding: 1.8rem 1.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--c-3);
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+}
+.wallet__balance {
+  margin-bottom: .8rem;
+}
+.wallet__balance h3 {
+  font-size: .6rem;
+  font-weight: normal;
+  margin-bottom: .4rem;
+}
+.wallet__balance p {
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+.wallet__balance p span[class*="icon"] {
+  margin-right: .4rem;
+}
+.wallet__logo {
+  position: absolute;
+  right: .8rem;
+  bottom: .8rem;
+  font-size: .6rem;
+}
+.wallet__card-chip {
+  position: absolute;
+  top: 20%;
+  right: 1.6rem;
+  width: 2.8rem;
+}
+.wallet__withdraw p {
+  font-size: .7rem;
+  text-align: center;
+  white-space: nowrap;
+  margin-bottom: .7rem;
+}
+.wallet__bar-container {
+  width: 100%;
+  height: .5rem;
+  background: var(--c-3);
+  border-radius: .25rem;
+  overflow: hidden;
+  margin-bottom: .6rem;
+}
+.wallet__bar {
+  height: 100%;
+  background: var(--c-10);
+  border-radius: .25rem;
+  border: 1px solid var(--c-2);
+}
+.wallet__withdraw button {
+  width: 100%;
+  padding: .8rem 1rem;
+  justify-content: center;
 }
