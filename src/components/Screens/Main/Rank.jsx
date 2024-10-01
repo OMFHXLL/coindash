@@ -3,19 +3,21 @@ import { useContext } from 'react';
 
 const ranks = [
   'Новичок',
-  'Ученик',
-  'Мастер монет',
-  'Эксперт тапов',
-  'Виртуоз',
-  'Легенда',
-  'Грандмастер'
+  'Молодая монета',
+  'Перспективная монета',
+  'Средняя капитализация',
+  'Высокая капитализация',
+  'Топ монета',
+  'Премиум монета',
+  'Мировой лидер',
+  'Крипто гегемон'
 ]
 
 function Rank() {
   const { state } = useContext(GameContext);
   const { level } = state;
 
-  return(
+  return (
     <div className="rank">
       {ranks[level - 1]}
     </div>
