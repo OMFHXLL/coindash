@@ -55,7 +55,7 @@ function TaskItem({ type, id, title, icon, reward, required, channel }) {
       }
     });
 
-    status === 0 || 2 && window.Telegram.WebApp.openTelegramLink(`https://t.me/${channel}`);
+    status !== 1 || status !== 3 && window.Telegram.WebApp.openTelegramLink(`https://t.me/${channel}`);
   };
 
 
