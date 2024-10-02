@@ -46,7 +46,7 @@ function TaskItem({ type, id, title, icon, reward, required, channel }) {
   };
 
   const handleRedirectToChannel = async () => {    
-    checkUserSubscription(tgId, channel, (isSubscribed) => {
+    checkUserSubscription(tgId, `@${channel}`, (isSubscribed) => {
       setStatus(isSubscribed ? 1 : 2)
       if (status === 1) {
         handleClaimReward();

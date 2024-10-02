@@ -19,12 +19,12 @@ const windows = [
 ];
 
 const Special = [
-  { id: 1, title: 'Подписаться на канал', reward: 55000, channel: '@testchatcoindash' },
-  { id: 2, title: 'Подписаться на канал', reward: 55000, channel: '@testchatcoindash' },
-  { id: 3, title: 'Подписаться на канал', reward: 55000, channel: '@testchatcoindash' },
-  { id: 4, title: 'Подписаться на канал', reward: 55000, channel: '@testchatcoindash' },
-  { id: 5, title: 'Подписаться на канал', reward: 55000, channel: '@testchatcoindash' },
-  { id: 6, title: 'Подписаться на канал', reward: 55000, channel: '@testchatcoindash' },
+  { id: 1, title: 'Подписаться на канал', reward: 55000, channel: 'testchatcoindash' },
+  { id: 2, title: 'Подписаться на канал', reward: 55000, channel: 'testchatcoindash' },
+  { id: 3, title: 'Подписаться на канал', reward: 55000, channel: 'testchatcoindash' },
+  { id: 4, title: 'Подписаться на канал', reward: 55000, channel: 'testchatcoindash' },
+  { id: 5, title: 'Подписаться на канал', reward: 55000, channel: 'testchatcoindash' },
+  { id: 6, title: 'Подписаться на канал', reward: 55000, channel: 'testchatcoindash' },
 ]
 
 const League = [
