@@ -3,7 +3,7 @@ import { actions, GameContext } from "../context/GameContext";
 import { formatScore, formatConversion } from "../utils/utils";
 
 import { TbArrowBack } from "react-icons/tb";
-import Chip from '../assets/image/chip.png';
+import Chip from '../assets/image/sim.png';
 
 function Wallet() {
   const { state, dispatch } = useContext(GameContext);

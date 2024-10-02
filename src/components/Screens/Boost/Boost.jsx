@@ -43,7 +43,10 @@ function Boost({ type, title, description, prices = [], power, icon }) {
         <div className="item__logo"><img src={icon} alt={`${type}-icon`} /></div>
         <div className='item__text'>
           <div className='item__title'>{title}</div>
-          <div className="daily-boost-counter"></div>
+          <div className="daily-boosts-counter">
+            <div className={boosts[type].count > 0 ? "counter-item active" : "counter-item"}></div>
+            <div className={boosts[type].count > 1 ? "counter-item active" : "counter-item"}></div>
+          </div>
           <div className="arrow">&raquo;</div>
           {/* <div className="boost__description" dangerouslySetInnerHTML={{ __html: description }}></div> */}
         </div>

@@ -4,6 +4,7 @@ const isTg = true;
 let tgUser = {}
 
 if (!isTg) {
+  tg = window;
   tgUser = {
     id: 1,
     username: 'guest',
@@ -35,4 +36,4 @@ const initTgApp = () => {
   }
 }
 
-export { tgUser, initTgApp };
+export { tg, tgUser, initTgApp };

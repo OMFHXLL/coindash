@@ -4,11 +4,12 @@
   --index: calc(1vw + 1vh);
   --tg-viewport-height: 100vh;
   --tg-viewport-width: 100vw;
-  --c-1: #0c1210;
+  --c-1: #0d271e;
   --c-2: #091e16;
   --c-3: #224d3d;
   --c-4: #145c42;
   --c-5: #00985ee9;
+  --c-6: #12372a;
   --c-9: #b40000;
   --c-10: #ddad35;
   --c-11: #9e7817;
@@ -58,7 +59,7 @@ button {
   max-height: var(--tg-viewport-height);
   color: #fff;
   overflow: hidden;
-  background: var(--c-1);
+  background: var(--c-2);
 }
 
 .loader {
@@ -274,7 +275,6 @@ button {
   align-items: stretch;
   justify-content: space-between;
   width: calc(100vw - 2rem);
-  max-width: 350px;
   height: 2.3rem;
   max-height: 2.3rem;
   padding: .3rem;
@@ -449,7 +449,6 @@ button {
   gap: calc(1.2 * var(--index));
 }
 .nav-container {
-  max-width: 350px;
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -781,6 +780,26 @@ button {
 .daily-boosts .boost__title {
   white-space: nowrap;
 }
+.daily-boosts-counter {
+  width: 75%;
+  height: 0.8rem;
+  margin-right: 1rem;
+  margin-top: 0.2rem;
+  background: var(--c-6);
+  border-radius: .4rem;
+  border: 3px solid var(--c-6);
+  display: flex;
+  gap: 5px;
+}
+.counter-item {
+  flex: 1;
+  height: 100%;
+  background: var(--c-3);
+  border-radius: .4rem;
+}
+.counter-item.active {
+  background: var(--c-10);
+}
 .update-boost-daily {
   font-weight: 700;
   background: var(--c-10);
@@ -1000,7 +1019,7 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #0c121099;
+  background: #0c1210ee;
   width: 100%;
   height: 100%;
   display: flex;
@@ -1051,7 +1070,9 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: var(--c-3);
+  background-image: url(./assets/image/card-background.jpg);
+  background-size: cover;
+  background-position: center;
   border-radius: 1rem;
   margin-bottom: 1rem;
 }
@@ -1080,7 +1101,7 @@ button {
 }
 .wallet__card-chip {
   position: absolute;
-  top: 20%;
+  top: 25%;
   right: 1.6rem;
   width: 2.8rem;
 }
