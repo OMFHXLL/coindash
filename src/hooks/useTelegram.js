@@ -1,6 +1,5 @@
 let tg;
 const isTg = true;
-
 let tgUser = {}
 
 if (!isTg) {

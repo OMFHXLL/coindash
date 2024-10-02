@@ -33,12 +33,25 @@ function formatScore(num) {
 }
 
 function formatConversion(num) {
-  // Умножаем num на 0.002 и округляем до двух знаков после запятой
-  const roundedNum = Math.round((num * 0.002) * 100) / 100;
+  // Умножаем num на 0.002
+  const convertedNum = num * 0.002;
+  
+  // Разделяем целую и дробную части
+  const integerPart = Math.floor(convertedNum);
+  const fractionalPart = Math.round((convertedNum - integerPart) * 100);
+  
+  // Форматируем целую часть
+  const formattedInteger = formatScore(integerPart);
+  
+  // Форматируем дробную часть, добавляем ноль, если необходимо
+  const formattedFractional = fractionalPart < 10 ? '0' + fractionalPart : fractionalPart;
 
-  // Преобразуем число в строку, заменяем точку на запятую и форматируем тысячные
-  return formatScore(roundedNum).replace('.', ',');
+  // Объединяем целую и дробную части
+  return `${formattedInteger},${formattedFractional}`;
 }
+
+// Пример использования
+console.log(formatConversion(12432)); // 12.432,34
 
 // IMPORT RANK ICONS
 function importRankIcons(r) {

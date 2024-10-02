@@ -53,7 +53,6 @@ function TaskItem({ type, id, title, icon, reward, required, channel }) {
     try {
       const isSubscribed = await new Promise((resolve) => {
         checkUserSubscription(tgId, `@${channel}`, (result) => {
-          console.log(result);
           resolve(result);
         });
       });
