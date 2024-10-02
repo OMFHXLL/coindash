@@ -50,16 +50,27 @@ function TaskItem({ type, id, title, icon, reward, required, channel }) {
   };
 
   const handleRedirectToChannel = async () => {
-    const isSubscribed = checkUserSubscription(tgId, `@${channel}`, (isSubscribed) => {
-      console.log(isSubscribed);
-      return isSubscribed;
-    });
-    setStatus(isSubscribed ? 1 : 2);
-    if (isSubscribed && status !== 3) {
-      handleClaimReward();
-      setStatus(3);
-    } else if (status !== 1 && status !== 3) {
-      window.Telegram.WebApp.openTelegramLink(`https://t.me/${channel}`);
+    try {
+      const isSubscribed = await new Promise((resolve) => {
+        checkUserSubscription(tgId, `@${channel}`, (result) => {
+          console.log(result);
+          resolve(result);
+        });
+      });
+  
+      if (isSubscribed) {
+        if (status !== 3) {
+          await handleClaimReward();
+          setStatus(3);
+        }
+      } else {
+        if (status !== 1 && status !== 3) {
+          window.Telegram.WebApp.openTelegramLink(`https://t.me/${channel}`);
+          setStatus(2);
+        }
+      }
+    } catch (error) {
+      console.error("Error checking subscription:", error);
     }
   };
 
