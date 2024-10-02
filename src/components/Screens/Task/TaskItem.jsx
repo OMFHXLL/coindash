@@ -55,7 +55,7 @@ function TaskItem({ type, id, title, icon, reward, required, channel }) {
       }
     });
 
-    window.Telegram.WebApp.openTelegramLink(channel);
+    window.Telegram.WebApp.openTelegramLink(`https://t.me/${channel}`, '_blank');
   };
 
 
