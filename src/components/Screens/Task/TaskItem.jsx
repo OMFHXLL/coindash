@@ -17,7 +17,7 @@ function TaskItem({ type, id, title, icon, reward, required, channel }) {
     if (tasks[type].includes(id)) {
       setStatus(2);
     }
-  }, [tasks]);
+  }, [tasks, type, id]);
 
   const handleClaimReward = async () => {
     if (tasks[type] && tasks[type].includes(id)) {
@@ -36,28 +36,28 @@ function TaskItem({ type, id, title, icon, reward, required, channel }) {
         .eq('tg_id', tgId);
 
       if (type === 'referral') {
-        dispatch({ type: actions.SET_REFERRALS, payload: {...referrals, ['reward']: referrals.reward + reward} })
+        dispatch({ 
+          type: actions.SET_REFERRALS, 
+          payload: {...referrals, reward: referrals.reward + reward} 
+        });
         await DB
           .from('users')
-          .update({ referrals: {...referrals, ['reward']: referrals.reward + reward} })
+          .update({ referrals: {...referrals, reward: referrals.reward + reward} })
           .eq('tg_id', tgId);
       }
+      setStatus(3);
     }
   };
 
-  const handleRedirectToChannel = async () => {    
-    checkUserSubscription(tgId, `@${channel}`, (isSubscribed) => {
-      setStatus(isSubscribed ? 1 : 2)
-      if (status === 1) {
-        handleClaimReward();
-        setStatus(3);
-        return;
-      }
-    });
-
-    status !== 1 || status !== 3 && window.Telegram.WebApp.openTelegramLink(`https://t.me/${channel}`);
+  const handleRedirectToChannel = async () => {
+    const isSubscribed = await checkUserSubscription(tgId, `@${channel}`);
+    setStatus(isSubscribed ? 1 : 2);
+    if (isSubscribed && status !== 3) {
+      handleClaimReward();
+    } else {
+      window.Telegram.WebApp.openTelegramLink(`https://t.me/${channel}`);
+    }
   };
-
 
   let barStyle = {};
   switch (type) {
