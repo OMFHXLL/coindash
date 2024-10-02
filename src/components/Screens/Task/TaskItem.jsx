@@ -54,7 +54,7 @@ function TaskItem({ type, id, title, icon, reward, required, channel }) {
     setStatus(isSubscribed ? 1 : 2);
     if (isSubscribed && status !== 3) {
       handleClaimReward();
-    } else {
+    } else if (status !== 1 && status !== 3) {
       window.Telegram.WebApp.openTelegramLink(`https://t.me/${channel}`);
     }
   };
