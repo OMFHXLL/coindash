@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const userId = tgUser.id;
 
-const socket = io('https://195.14.123.68:4000');
+const socket = io('wss://195.14.123.68:4000');
 
 const { setGlobalState, getGlobalState, useGlobalState } = createGlobalState({
   'tg_id': tgUser.id,
