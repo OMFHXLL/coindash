@@ -1,21 +1,19 @@
-import { GameContext, actions } from '../../../context/GameContext';
-import { useContext } from 'react';
+import { useGlobalState } from '../../../context/state';
 
 const ranks = [
   'Новичок',
-  'Молодая монета',
-  'Перспективная монета',
-  'Средняя капитализация',
-  'Высокая капитализация',
-  'Топ монета',
-  'Премиум монета',
-  'Мировой лидер',
-  'Крипто гегемон'
+  'Искатель',
+  'Завоеватель',
+  'Стратег',
+  'Мастер',
+  'Властелин',
+  'Хранитель',
+  'Император',
+  'Легенда'
 ]
 
 function Rank() {
-  const { state } = useContext(GameContext);
-  const { level } = state;
+  const [ level ] = useGlobalState('level');
 
   return (
     <div className="rank">

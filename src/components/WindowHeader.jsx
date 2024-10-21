@@ -1,17 +1,30 @@
 import { useContext } from 'react';
-import { GameContext, actions } from '../context/GameContext';
+import { getGlobalState, setGlobalState, useGlobalState } from '../context/state';
 import { formatConversion, formatScore, rankIcons } from '../utils/utils';
 
 import CoinIcon from '../assets/image/coin-icon.png';
 import ConversionIcon from '../assets/image/conversion-icon.png';
 import WalletIcon from '../assets/image/wallet-icon.png';
 
+const ranks = [
+  'Новичок',
+  'Искатель',
+  'Завоеватель',
+  'Стратег',
+  'Мастер',
+  'Властелин',
+  'Хранитель',
+  'Император',
+  'Легенда'
+]
+
 function WindowHeader({main}) {
-  const { state, dispatch } = useContext(GameContext);
-  const { score, level } = state;
+  const [ score, setScore ] = useGlobalState('score');
+  const [ level, setLevel ] = useGlobalState('level');
+  const page = getGlobalState('page');
 
   const handleOpenWallet = () => {
-    dispatch({type: actions.SET_SHOW_WALLET, payload: true})
+    setGlobalState('show_wallet', true);
   }
 
   const rankIcon = rankIcons[Object.keys(rankIcons)[level - 1]]
@@ -24,7 +37,7 @@ function WindowHeader({main}) {
       </div>}
       <div className="window__header-item">
         <img src={rankIcon} className="window__header-item-icon league"/>
-        Лига
+        {page === 'TAP' ? ranks[level - 1] : 'Лига'}
       </div>
       <div className="window__header-item">
         <img src={ConversionIcon} className="window__header-item-icon"/>

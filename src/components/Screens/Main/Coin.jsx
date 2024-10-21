@@ -1,7 +1,7 @@
-import React, { useEffect, useContext, useRef } from 'react';
-import { DB } from '../../../db';
-import { GameContext, actions } from '../../../context/GameContext';
-import { RiCopperCoinFill } from "react-icons/ri";
+import React from 'react';
+import { useGlobalState, socket } from '../../../context/state';
+import { isExtraTapActive } from '../../../utils/extraTap';
+import { coinIcons } from '../../../utils/utils';
 
 const ranks = [
   5000,
@@ -16,11 +16,16 @@ const ranks = [
 ]
 
 const Coin = () => {
-  const { state, dispatch } = useContext(GameContext);
-  const { tgId, energy, level, score, totalScore, clicks, multiplier, isAccountActive, infinityEnergy, extraTap, page } = state;
+  const [ score, setScore ] = useGlobalState('score');
+  const [ clicks, setClicks ] = useGlobalState('clicks');
+  const [ totalScore, setTotalScore ] = useGlobalState('total_score');
+  const [ energy, setEnergy ] = useGlobalState('energy');
+  const [ multiplier, setMultiplier ] = useGlobalState('multiplier');
+  const [ level, setLevel ] = useGlobalState('level');
+  const [ isAccountActive ] = useGlobalState('is_account_active');
+  const [ infinityEnergy ] = useGlobalState('infinity_energy');
   
-  const extraTapTimerRef = useRef(null);
-  const originalMultiplierRef = useRef(multiplier); // Сохраняем исходный множитель
+  const newMultiplier = isExtraTapActive ? multiplier * 5 : multiplier;
 
   const handleCoinClick = (e) => {
     const touches = e.touches;
@@ -43,7 +48,7 @@ const Coin = () => {
 
     const multiplierAnimation = document.createElement('div');
     multiplierAnimation.className = 'coin-multiplier noselect';
-    multiplierAnimation.innerHTML = `<span class="coin-multiplier noselect">+${multiplier}</span>`;
+    multiplierAnimation.innerHTML = `<span class="coin-multiplier noselect">+${newMultiplier}</span>`;
     document.body.appendChild(multiplierAnimation);
     multiplierAnimation.style.position = 'absolute';
     multiplierAnimation.style.left = `${x}px`;
@@ -60,64 +65,31 @@ const Coin = () => {
     });
 
     let newLevel = level;
-    const newScore = score + multiplier;
-    const newTotalScore = totalScore + multiplier;
+    const newScore = score + newMultiplier;
+    const newTotalScore = totalScore + newMultiplier;
     const newClicksScore = clicks + 1;
-    const newEnergyScore = infinityEnergy ? energy : energy - multiplier;
+    const newEnergyScore = infinityEnergy ? energy : energy - newMultiplier;
 
     if (ranks[level - 1] < totalScore) {
       newLevel = level + 1;
-      dispatch({ type: actions.SET_LEVEL, payload: newLevel });
+      setLevel(newLevel);
     }
 
-    dispatch({ type: actions.SET_SCORE, payload: newScore });
-    dispatch({ type: actions.SET_TOTAL_SCORE, payload: newTotalScore });
-    dispatch({ type: actions.SET_CLICKS, payload: newClicksScore });
-    dispatch({ type: actions.SET_ENERGY, payload: newEnergyScore });
+    setScore(newScore);
+    setTotalScore(newTotalScore);
+    setClicks(newClicksScore)
+    setEnergy(newEnergyScore)
     
-    await DB
-      .from('users')
-      .update({ score: newScore, total_score: newTotalScore, clicks: newClicksScore, energy: newEnergyScore, level: newLevel })
-      .eq('tg_id', tgId);
+    socket.emit('updateUserData', { score: newScore, total_score: newTotalScore, clicks: newClicksScore, energy: newEnergyScore, level: newLevel })
   };
 
-  useEffect(() => {
-    if (page !== 'TAP') {
-      // Останавливаем таймер и восстанавливаем множитель при уходе со страницы TAP
-      if (extraTapTimerRef.current) {
-        clearTimeout(extraTapTimerRef.current);
-        extraTapTimerRef.current = null;
-        dispatch({ type: actions.SET_MULTIPLIER, payload: originalMultiplierRef.current });
-        dispatch({ type: actions.SET_INFINITY_ENERGY, payload: false });
-        dispatch({ type: actions.SET_EXTRA_TAP, payload: { active: false, started: false } });
-      }
-    }
-
-    if (extraTap.active && page === 'TAP' && extraTap.timeLeft > 0) {
-      const newMultiplier = multiplier * 5;
-      originalMultiplierRef.current = multiplier; // Сохраняем текущий множитель перед изменением
-
-      dispatch({ type: actions.SET_MULTIPLIER, payload: newMultiplier });
-      dispatch({ type: actions.SET_INFINITY_ENERGY, payload: true });
-
-      if (extraTapTimerRef.current) {
-        clearTimeout(extraTapTimerRef.current);
-      }
-
-      extraTapTimerRef.current = setTimeout(() => {
-        // Возвращаем исходный множитель и отключаем улучшение
-        dispatch({ type: actions.SET_MULTIPLIER, payload: originalMultiplierRef.current });
-        dispatch({ type: actions.SET_INFINITY_ENERGY, payload: false });
-        dispatch({ type: actions.SET_EXTRA_TAP, payload: { active: false, started: false } });
-        extraTapTimerRef.current = null;
-      }, extraTap.timeLeft);
-    }
-  }, [page, extraTap]);
 
   return (
     <div>
       <div className="coin" onTouchStart={handleCoinClick}>
-        <div className="coin-image"></div>
+        <div className="coin-image">
+          <img src={coinIcons[Object.keys(coinIcons)[level - 1]]} />
+        </div>
       </div>
     </div>
   );

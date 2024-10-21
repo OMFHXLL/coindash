@@ -1,12 +1,10 @@
-import { GameContext, actions } from '../../../context/GameContext';
 import Rank from './Rank';
 import { formatScore } from '../../../utils/utils';
-import { useContext } from 'react';
+import { useGlobalState } from '../../../context/state';
 
 
 function Score ({ image }) {
-  const { state } = useContext(GameContext);
-  const { score } = state;
+  const [ score ] = useGlobalState('score');
 
   return(
     <div className="score">

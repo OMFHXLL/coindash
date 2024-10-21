@@ -54,7 +54,7 @@ function formatConversion(num) {
 console.log(formatConversion(12432)); // 12.432,34
 
 // IMPORT RANK ICONS
-function importRankIcons(r) {
+function importImg(r) {
   let icons = {};
   r.keys().forEach((item) => {
     icons[item.replace('./', '')] = r(item);
@@ -62,8 +62,8 @@ function importRankIcons(r) {
   return icons;
 }
 
-const rankIcons = importRankIcons(require.context('../assets/image/ranks', false, /\.png$/));
-// console.log(rankIcons[Object.keys(rankIcons)[1]])
+const rankIcons = importImg(require.context('../assets/image/ranks', false, /\.png$/));
+const coinIcons = importImg(require.context('../assets/image/coins', false, /\.png$/));
 
 
 
@@ -99,4 +99,4 @@ function checkUserSubscription(userId, chatId, callback) {
 
 
 
-export { formatTime, formatScore, formatConversion, rankIcons, checkUserSubscription }
+export { formatTime, formatScore, formatConversion, rankIcons, coinIcons, checkUserSubscription }

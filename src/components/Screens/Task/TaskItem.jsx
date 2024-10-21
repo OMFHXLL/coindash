@@ -1,11 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DB } from "../../../db";
 import { formatScore, checkUserSubscription } from "../../../utils/utils";
-import { GameContext, actions } from "../../../context/GameContext";
+import { useGlobalState } from "../../../context/state";
 
 function TaskItem({ type, id, title, icon, reward, required, channel }) {
-  const { state, dispatch } = useContext(GameContext);
-  const { tgId, tasks, score, totalScore, level, referrals } = state;
+  const [ tgId ] = useGlobalState('tg_id');
+  const [ tasks, setTasks ] = useGlobalState('tasks');
+  const [ score, setScore ] = useGlobalState('score');
+  const [ totalScore, setTotalScore ] = useGlobalState('total_score');
+  const [ referrals, setReferrals ] = useGlobalState('referrals');
   
   const [status, setStatus] = useState(0);
 
@@ -14,7 +17,7 @@ function TaskItem({ type, id, title, icon, reward, required, channel }) {
       setStatus(3);
       return;
     }
-    if (tasks[type].includes(id)) {
+    if (tasks[type] && tasks[type].includes(id)) {
       setStatus(2);
     }
   }, [tasks, type, id]);
@@ -28,22 +31,20 @@ function TaskItem({ type, id, title, icon, reward, required, channel }) {
         ...tasks,
         [type]: [...(tasks[type] || []), id]
       };
-      dispatch({ type: actions.SET_TASKS, payload: updatedTasks });
-      dispatch({ type: actions.SET_SCORE, payload: newScore });
+      setTasks(updatedTasks);
+      setScore(newScore);
       await DB
         .from('users')
         .update({ score: newScore, tasks: updatedTasks })
         .eq('tg_id', tgId);
 
       if (type === 'referral') {
-        dispatch({ 
-          type: actions.SET_REFERRALS, 
-          payload: {...referrals, reward: referrals.reward + reward} 
-        });
-        await DB
-          .from('users')
-          .update({ referrals: {...referrals, reward: referrals.reward + reward} })
-          .eq('tg_id', tgId);
+        setReferrals(referrals.reward + reward)
+
+        // await DB
+        //   .from('users')
+        //   .update({ referrals: {...referrals, reward: referrals.reward + reward} })
+        //   .eq('tg_id', tgId);
       }
       setStatus(3);
     }

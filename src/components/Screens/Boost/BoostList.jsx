@@ -1,6 +1,5 @@
 import Boost from "./Boost";
-import { GameContext, actions } from '../../../context/GameContext';
-import { useEffect, useContext } from "react";
+import { useGlobalState, setGlobalState } from '../../../context/state';
 
 const BoostsData = {
   'power_compose': { title: 'Мультитап' },
@@ -48,8 +47,7 @@ const BoostsArray = [
 ]
 
 const BoostList = ({ type }) => {
-  const { state, dispatch } = useContext(GameContext);
-  const boosts = state.boosts;
+  const [ boosts ] = useGlobalState('boosts');
   if (boosts) {
     boosts.forEach(item => {
       const boost = BoostsArray.find(boost => boost.id === item.id);

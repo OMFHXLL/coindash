@@ -1,35 +1,35 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { DB } from '../../../db';
 import WindowHeader from '../../WindowHeader';
 import ReferalMagnetIcon from '../../../assets/image/referal-magnet-icon.png';
-import { GameContext, actions } from '../../../context/GameContext';
 import { formatScore } from '../../../utils/utils';
+import { useGlobalState } from '../../../context/state';
 
 
 const RefScreen = ({isActive}) => {
-  const { state, dispatch } = useContext(GameContext);
-  const { tgId, referrals } = state;
+  const [ tgId ] = useGlobalState('tg_id');
+  const [ referrals ] = useGlobalState('referrals');
 
   const fetchReferral = async () => {
-    const { data, error } = await DB
-      .from('referrals')
-      .select('*')
-      .eq('referrer_id', tgId)
+    // const { data, error } = await DB
+    //   .from('referrals')
+    //   .select('*')
+    //   .eq('referrer_id', tgId)
 
-    if (error) {
-      console.error(error);
-      return;
-    }
+    // if (error) {
+    //   console.error(error);
+    //   return;
+    // }
 
-    if (data && data.length > 0) {
-      const referredCount = data.length;
-      const updatedReferrals = {
-        ...referrals,
-        ['joined']: referredCount
-      }
-      dispatch({ type: actions.SET_REFERRALS, payload: updatedReferrals });
-      return;
-    }
+    // if (data && data.length > 0) {
+    //   const referredCount = data.length;
+    //   const updatedReferrals = {
+    //     ...referrals,
+    //     ['joined']: referredCount
+    //   }
+    //   dispatch({ type: actions.SET_REFERRALS, payload: updatedReferrals });
+    //   return;
+    // }
   }
 
   useEffect(() => {

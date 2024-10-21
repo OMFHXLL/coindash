@@ -1,7 +1,10 @@
 import React, { createContext, useReducer, useEffect, useState } from 'react';
 import Preloader from '../components/Preloader';
-import { DB } from '../db';
+import { io } from 'socket.io-client';
+import { DB, getUser } from '../db';
 import { tgUser, initTgApp } from '../hooks/useTelegram';
+
+const socket = io('http://192.168.0.16:3000');
 
 const userId = tgUser.id;
 
@@ -187,6 +190,9 @@ const GameProvider = ({ children }) => {
 
   useEffect(() => {
     initTgApp();
+    socket.on('connect', () => {
+      socket.emit('connectUser')
+    })
     async function loadUserData() {
       const userData = await fetchUserData();
       if (userData) {

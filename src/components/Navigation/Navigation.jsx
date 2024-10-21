@@ -1,11 +1,10 @@
-import React, { useContext, useState } from 'react';
-import { GameContext } from '../../context/GameContext';
+import React, { useState } from 'react';
 import Button from './Button';
+import { useGlobalState } from '../../context/state';
 
 const Navigation = ({ activeWindow, onNavClick }) => {
   const [isMainVisible, setMainVisible] = useState(false);
-  const { state } = useContext(GameContext);
-  const isNavHidden = state.hideNav;
+  const [ isNavHidden ] = useGlobalState('hide_nav');
 
   function setMain(link) {
     if (link === 'TAP') {
@@ -20,7 +19,8 @@ const Navigation = ({ activeWindow, onNavClick }) => {
       <div className='nav-container'>
         <Button activeWindow={activeWindow} onClickButton={onNavClick} showMainButton={setMain} link={'REF'} />
         <Button activeWindow={activeWindow} onClickButton={onNavClick} showMainButton={setMain} link={'TASK'} />
-        <Button activeWindow={activeWindow} onClickButton={onNavClick} showMainButton={setMain} link={'TAP'} hidden={!isMainVisible}/>
+        <Button activeWindow={activeWindow} onClickButton={onNavClick} showMainButton={setMain} link={'TAP'}/>
+        {/* <Button activeWindow={activeWindow} onClickButton={onNavClick} showMainButton={setMain} link={'TAP'} hidden={!isMainVisible}/> */}
         <Button activeWindow={activeWindow} onClickButton={onNavClick} showMainButton={setMain} link={'BOOST'} />
         {/* <Button onClickButton={onNavClick} showMainButton={setMain} link={'STATS'} /> */}
       </div>

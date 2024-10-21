@@ -1,18 +1,24 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { GameContext, actions } from '../../../context/GameContext';
-import EnergyIcon from '../../../assets/flash-thunder-svgrepo-com.svg';
-import { DB } from '../../../db';
+import { useGlobalState, socket } from '../../../context/state';
+import { isExtraTapActive, extraTapInitialTime } from '../../../utils/extraTap';
 
 const EnergyBar = () => {
-  const { state, dispatch } = useContext(GameContext);
-  const { energy, energyMultiplier, maxEnergy, tgId, lastTimeOnline } = state;
   const [initialized, setInitialized] = useState(false);
-  const [energyState, setEnergyState] = useState(energy);
+  const [ tgId ] = useGlobalState('tg_id');
+  const [ lastTimeOnline, setLastTimeOnline] = useGlobalState('last_time_online');
+  const [ energy, setEnergy ] = useGlobalState('energy');
+  const [ energyMultiplier, setEnergyMultiplier ] = useGlobalState('energy_multiplier');
+  const [ maxEnergy, setMaxEnergy ] = useGlobalState('max_energy');
+  const [ extraTapTime, setExtraTapTime ] = useGlobalState('extra_tap_time');
 
 
   // Устанавливаем стиль для заполненной части EnergyBar
-  const barStyle = {
+  const progressBarStyle = {
     width: `${(energy * 100) / maxEnergy}%`
+  };
+  
+  const extraTapProgressBarStyle = {
+    width: `${(extraTapTime * 100) / extraTapInitialTime}%`
   };
 
   useEffect(() => {
@@ -22,15 +28,9 @@ const EnergyBar = () => {
       const timeDifferenceInSeconds = Math.floor((now - lastOnlineTime) / 1000);
 
       let newEnergy = Math.min(energy + timeDifferenceInSeconds * energyMultiplier, maxEnergy);
+      setEnergy(newEnergy);
       
-
-      dispatch({ type: actions.SET_ENERGY, payload: newEnergy });
-
-
-      // Обновляем данные в базе данных
-      await DB.from('users')
-        .update({ energy: newEnergy, last_time_online: new Date().toISOString() })
-        .eq('tg_id', tgId);
+      socket.emit('updateUserData', { energy: newEnergy });
       setInitialized(true)
     };
     setTimeout(() => {
@@ -43,20 +43,19 @@ const EnergyBar = () => {
       const intervalId = setInterval(async () => {
         if (energy < maxEnergy) {
           const newEnergyScore = Math.min(energy + energyMultiplier, maxEnergy); // Ограничиваем максимальную энергию
-          dispatch({ type: actions.SET_ENERGY, payload: newEnergyScore });
-          await DB.from('users')
-            .update({ energy: newEnergyScore, max_energy: maxEnergy, last_time_online: new Date().toISOString() })
-            .eq('tg_id', tgId);
+          setEnergy(newEnergyScore);
+
+          socket.emit('updateUserData', { energy: newEnergyScore });
         }
       }, 1000);
 
       return () => clearInterval(intervalId);
     }
-  }, [energy, energyMultiplier, maxEnergy, tgId, dispatch, initialized]);
+  }, [energy, energyMultiplier, maxEnergy, tgId, initialized]);
 
   useEffect(() => {
     if (energy > maxEnergy) {
-      dispatch({ type: actions.SET_ENERGY, payload: maxEnergy });
+      setEnergy(maxEnergy);
     }
   }, [maxEnergy]);
 
@@ -64,8 +63,9 @@ const EnergyBar = () => {
     <div className="energy">
       <div className="energy-score"><div className='energy-icon mask'></div> {energy} / {maxEnergy}</div>
       <div className="energy-bar">
-        <div className="energy-bar-fill" style={barStyle} />
+        <div className="energy-bar-fill" style={progressBarStyle} />
       </div>
+      {isExtraTapActive && <div className="extra-tap-bar" style={extraTapProgressBarStyle}></div>}
     </div>
   );
 };

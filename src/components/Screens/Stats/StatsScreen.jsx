@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
-import { GameContext, actions } from '../../../context/GameContext';
+import React from 'react';
 import StatsHeader from './StatsHeader';
+import { useGlobalState } from '../../../context/state';
 
 const StatsScreen = ({isActive}) => {
-  const { state, dispatch } = useContext(GameContext);
-  const { score, totalScore, level } = state;
+  const [ score ] = useGlobalState('score');
+  const [ totalScore ] = useGlobalState('total_score');
+  const [ level ] = useGlobalState('level');
 
   return(
     <div className={isActive ? 'stats window active' : 'stats window'}>

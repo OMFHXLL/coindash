@@ -8,23 +8,36 @@ const useExtraTap = (initialTime = 0) => {
   useEffect(() => {
     if (isActive) {
       timerRef.current = setInterval(() => {
-        setTime(prevTime => prevTime + 1); // Или другую логику увеличения времени
-      }, 10); // Обновление каждую секунду
-
-      // Очистка таймера при размонтировании или изменении isActive
-      return () => clearInterval(timerRef.current);
-    } else {
-      clearInterval(timerRef.current);
+        setTime(prevTime => Math.max(prevTime - .1, 0)); // Снижаем время, но не даем ему стать отрицательным
+      }, 100); // Обновление каждую секунду
     }
+    
+    // Очистка таймера при размонтировании или изменении isActive
+    return () => clearInterval(timerRef.current);
   }, [isActive]);
 
-  const start = () => setIsActive(true);
-  const stop = () => setIsActive(false);
+  useEffect(() => {
+    console.log(time)
+  }, [time])
+
+  const start = () => {
+    if (!isActive) {
+      setIsActive(true);
+    }
+  };
+
+  const stop = () => {
+    if (isActive) {
+      setIsActive(false);
+    }
+  };
+
   const reset = () => {
     setIsActive(false);
     setTime(initialTime);
   };
 
+  // Возвращаем состояние и функции для управления
   return { time, isActive, start, stop, reset };
 };
 

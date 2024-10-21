@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-import { GameProvider } from './context/GameContext';
+import { GameProvider } from './context/state';
 import Preloader from './components/Preloader';
 import Background from './components/Background';
 import MainScreen from './components/Screens/Main/MainScreen';
@@ -10,7 +10,7 @@ import BoostScreen from './components/Screens/Boost/BoostScreen';
 import StatsScreen from './components/Screens/Stats/StatsScreen';
 import Navigation from './components/Navigation/Navigation';
 import Wallet from './components/Wallet';
-import { DB } from './db';
+import { startExtraTap, stopExtraTap } from './utils/extraTap';
 
 
 
@@ -21,6 +21,14 @@ function App() {
   const handleNavigationClick = (window) => {
     setActiveWindow(window);
   };
+
+  useEffect(() => {
+    if (activeWindow === 'TAP') {
+      startExtraTap();
+    } else {
+      stopExtraTap();
+    }
+  }, [activeWindow])
 
   return (
     <GameProvider>
