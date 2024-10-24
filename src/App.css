@@ -40,14 +40,14 @@ a {
 
 html {
   width: var(--tg-viewport-width);
-  max-width: var(--tg-viewport-width);
   height: var(--tg-viewport-height);
-  max-height: var(--tg-viewport-height);
   overflow: hidden;
 }
 
 body {
-  overflow: hidden;
+  max-width: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
   font-family: 'Montserrat', sans-serif;
 }
 
