@@ -43,6 +43,7 @@ html {
   max-width: var(--tg-viewport-width);
   height: var(--tg-viewport-height);
   max-height: var(--tg-viewport-height);
+  overflow: hidden;
 }
 
 body {
