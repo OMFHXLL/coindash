@@ -39,8 +39,8 @@ a {
 }
 
 html {
-  width: 100%;
-  max-width: 100%;
+  width: var(--tg-viewport-width);
+  max-width: var(--tg-viewport-width);
   height: var(--tg-viewport-height);
   max-height: var(--tg-viewport-height);
   overflow: hidden;
@@ -60,10 +60,8 @@ ul {
 }
 
 .app {
-  width: var(--tg-viewport-width);
-  max-width: var(--tg-viewport-width);
-  height: var(--tg-viewport-height);
-  max-height: var(--tg-viewport-height);
+  width: 100%;
+  height: 100%;
   color: #fff;
   overflow: hidden;
   background: var(--c-2);
