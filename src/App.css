@@ -39,8 +39,8 @@ a {
 }
 
 html {
-  width: var(--tg-viewport-width);
-  max-width: var(--tg-viewport-width);
+  width: 100%;
+  max-width: 100%;
   height: var(--tg-viewport-height);
   max-height: var(--tg-viewport-height);
   overflow: hidden;
